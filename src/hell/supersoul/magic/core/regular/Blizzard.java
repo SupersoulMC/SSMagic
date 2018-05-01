@@ -1,6 +1,8 @@
 package hell.supersoul.magic.core.regular;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map.Entry;
 
 import org.bukkit.*;
@@ -26,7 +28,9 @@ public class Blizzard extends RegularM {
     Double d = 1.2;
     Integer time = 0;
     Integer targetCount = 0;
-    BukkitTask effectTask;
+    Boolean end = false;
+    List<BukkitTask> tasks = new ArrayList<>();
+    LinkedHashMap<Location, Material> changed = new LinkedHashMap<Location, Material>();
 
 	public Blizzard(Main plugin, Integer level) {
         super.plugin = plugin;
@@ -35,20 +39,40 @@ public class Blizzard extends RegularM {
 	
 	@Override
 	public boolean cast(Player caster) {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                time++;
+                if(time == level * 3 * 20) {
+                    for(Entry<Location, Material> e2 : changed.entrySet()) {
+                        for(Player p : Bukkit.getOnlinePlayers()) {
+                            p.sendBlockChange(e2.getKey(), e2.getValue().getId(), (byte) 0);
+                        }
+                        e2.getKey().getBlock().getWorld().spigot().playEffect(e2.getKey(), Effect.TILE_BREAK, 174, 0, 0.5f, 0.5f, 0.5f, 0f, 1, 64);
+                        e2.getKey().getBlock().getWorld().playSound(e2.getKey(), Sound.BLOCK_GLASS_BREAK, 3.0F, 1.0F);
+                    }
+                    end = true;
+                    this.cancel();
+                }
+            }
+        }.runTaskTimer(plugin, 0, 1);
         for(Entity e : caster.getWorld().getNearbyEntities(caster.getLocation(), level * 2, 3, level * 2)) {
             if(!e.equals(caster)) {
                 if(e instanceof LivingEntity) {
                     targetCount += 1;
                     ((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, level * 5 * 20, level));
                     ((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.JUMP, level * 5 * 20, -5));
-                    LinkedHashMap<Location, Material> changed = new LinkedHashMap<Location, Material>();
-                    effectTask = new BukkitRunnable() {
+                    //Particle effect task
+                    BukkitTask effectTask = new BukkitRunnable() {
                         @Override
                         public void run() {
                             for(Integer i = 0; i <= 80; i++) {
                                 new BukkitRunnable() {
                                     @Override
                                     public void run() {
+                                        if(end) {
+                                            return;
+                                        }
                                         Location l = caster.getLocation();
                                         Double h1x = d * Math.sin(h1original);
                                         Double h1z = d * Math.cos(h1original);
@@ -75,13 +99,15 @@ public class Blizzard extends RegularM {
                             }
                         }
                     }.runTaskTimer(plugin, 0, 80);
+                    tasks.add(effectTask);
+                    //Block effect task
                     new BukkitRunnable() {
                         @Override
                         public void run() {
                             Block b = e.getLocation().getBlock().getRelative(BlockFace.DOWN);
                             if(((LivingEntity) e).hasPotionEffect(PotionEffectType.SLOW)) {
                                 e.getWorld().spigot().playEffect(e.getLocation().add(0.0, 1.0, 0.0), Effect.FIREWORKS_SPARK, 0, 0, 0.5f, 0.5f, 0.5f, 0f, 1, 64);
-                                if(!(b.getType() == Material.AIR)) {
+                                if(!(b.getType() == Material.AIR) && !(b instanceof InventoryHolder)) {
                                     if(!changed.containsKey(b.getLocation())) {
                                         changed.put(b.getLocation(), b.getType());
                                     }
@@ -90,18 +116,6 @@ public class Blizzard extends RegularM {
                                     }
                                 }
                             }
-                            if(time == level * 5 * 20 * targetCount) {
-                                for(Entry<Location, Material> e2 : changed.entrySet()) {
-                                    for(Player p : Bukkit.getOnlinePlayers()) {
-                                        p.sendBlockChange(e2.getKey(), e2.getValue().getId(), (byte) 0);
-                                    }
-                                    b.getWorld().spigot().playEffect(e2.getKey(), Effect.TILE_BREAK, 174, 0, 0.5f, 0.5f, 0.5f, 0f, 1, 64);
-                                    b.getWorld().playSound(e2.getKey(), Sound.BLOCK_GLASS_BREAK, 3.0F, 1.0F);
-                                }
-                                this.cancel();
-                                effectTask.cancel();
-                            }
-                            time++;
                         }
                     }.runTaskTimer(Main.instance, 0, 1);
                 }

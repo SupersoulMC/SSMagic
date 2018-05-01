@@ -1,24 +1,21 @@
 package hell.supersoul.magic.events;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
 import hell.supersoul.magic.Main;
 import hell.supersoul.magic.core.RegularM;
+import hell.supersoul.magic.core.combo.Berserk;
 import hell.supersoul.magic.core.regular.Blizzard;
+import hell.supersoul.magic.core.regular.Lightning;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import hell.supersoul.magic.core.combo.Berserk;
-import hell.supersoul.magic.core.regular.Lightning;
-import hell.supersoul.magic.managers.ComboManager;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @SuppressWarnings("deprecation")
 public class EventProcesser extends Event implements Listener {
@@ -41,7 +38,7 @@ public class EventProcesser extends Event implements Listener {
 	@EventHandler
 	public void cast(PlayerInteractEvent e) {
 		if(e.getPlayer().getItemInHand() != null && e.getPlayer().getItemInHand().hasItemMeta() && e.getPlayer().getItemInHand().getItemMeta().hasDisplayName() && e.getPlayer().getItemInHand().getItemMeta().getDisplayName().contains("Wand")) {
-			RegularM cast = new Blizzard(plugin, Integer.parseInt(e.getItem().getItemMeta().getDisplayName().split(" ")[1]));
+			RegularM cast = new Lightning(plugin, Integer.parseInt(e.getItem().getItemMeta().getDisplayName().split(" ")[1]));
 			cast.cast(e.getPlayer());
 		}
 	}
