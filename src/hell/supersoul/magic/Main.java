@@ -17,6 +17,6 @@ public class Main extends JavaPlugin {
 		
 	}
 	
-	//Testing2
+	//Testing
 
 }
