@@ -56,7 +56,7 @@ public class Lightning extends RegularM {
 						}
 					}
 				}
-			}.runTaskLater(Main.instance, i);
+			}.runTaskLater(plugin, i);
 		}
 		return false;
 	}

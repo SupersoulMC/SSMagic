@@ -56,7 +56,7 @@ public class Fire extends RegularM {
 						}
 					}
 				}
-			}.runTaskLater(Main.instance, i);
+			}.runTaskLater(plugin, i);
 		}
 		return false;
 	}

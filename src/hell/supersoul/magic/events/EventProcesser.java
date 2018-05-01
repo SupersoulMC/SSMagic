@@ -20,7 +20,7 @@ import java.util.Map;
 @SuppressWarnings("deprecation")
 public class EventProcesser extends Event implements Listener {
 
-	protected Main plugin;
+	Main plugin;
 	public Map<String, Long> lasthit = new HashMap<String, Long>();
 	public Map<String, Integer> counthit = new HashMap<String, Integer>();
 

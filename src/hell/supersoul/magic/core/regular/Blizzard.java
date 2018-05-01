@@ -29,7 +29,6 @@ public class Blizzard extends RegularM {
     Integer time = 0;
     Integer targetCount = 0;
     Boolean end = false;
-    List<BukkitTask> tasks = new ArrayList<>();
     LinkedHashMap<Location, Material> changed = new LinkedHashMap<Location, Material>();
 
 	public Blizzard(Main plugin, Integer level) {
@@ -60,10 +59,10 @@ public class Blizzard extends RegularM {
             if(!e.equals(caster)) {
                 if(e instanceof LivingEntity) {
                     targetCount += 1;
-                    ((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, level * 5 * 20, level));
-                    ((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.JUMP, level * 5 * 20, -5));
+                    ((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, level * 3 * 20, level));
+                    ((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.JUMP, level * 3 * 20, -5));
                     //Particle effect task
-                    BukkitTask effectTask = new BukkitRunnable() {
+                    new BukkitRunnable() {
                         @Override
                         public void run() {
                             for(Integer i = 0; i <= 80; i++) {
@@ -99,11 +98,13 @@ public class Blizzard extends RegularM {
                             }
                         }
                     }.runTaskTimer(plugin, 0, 80);
-                    tasks.add(effectTask);
                     //Block effect task
                     new BukkitRunnable() {
                         @Override
                         public void run() {
+                            if(end) {
+                                return;
+                            }
                             Block b = e.getLocation().getBlock().getRelative(BlockFace.DOWN);
                             if(((LivingEntity) e).hasPotionEffect(PotionEffectType.SLOW)) {
                                 e.getWorld().spigot().playEffect(e.getLocation().add(0.0, 1.0, 0.0), Effect.FIREWORKS_SPARK, 0, 0, 0.5f, 0.5f, 0.5f, 0f, 1, 64);
