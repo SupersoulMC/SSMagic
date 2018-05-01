@@ -1,0 +1,7 @@
+name: SSMagic
+main: hell.supersoul.magic.Main
+version: 1.01
+
+commands:
+    magictest:
+        description: SS Magic

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import hell.supersoul.magic.Main;
 import hell.supersoul.magic.core.RegularM;
 import hell.supersoul.magic.core.regular.Blizzard;
 import org.bukkit.entity.Player;
@@ -21,9 +22,15 @@ import hell.supersoul.magic.managers.ComboManager;
 
 @SuppressWarnings("deprecation")
 public class EventProcesser extends Event implements Listener {
-	
+
+	protected Main plugin;
 	public Map<String, Long> lasthit = new HashMap<String, Long>();
 	public Map<String, Integer> counthit = new HashMap<String, Integer>();
+
+
+	public EventProcesser(Main plugin) {
+		this.plugin = plugin;
+	}
 
 	@Override
 	public HandlerList getHandlers() {
@@ -33,8 +40,8 @@ public class EventProcesser extends Event implements Listener {
 	
 	@EventHandler
 	public void cast(PlayerInteractEvent e) {
-		if(e.getPlayer().getItemInHand() != null && e.getPlayer().getItemInHand().hasItemMeta() && e.getPlayer().getItemInHand().getItemMeta().hasDisplayName() && e.getPlayer().getItemInHand().getItemMeta().getDisplayName().equals("Wand")) {
-			RegularM cast = new Blizzard(1);
+		if(e.getPlayer().getItemInHand() != null && e.getPlayer().getItemInHand().hasItemMeta() && e.getPlayer().getItemInHand().getItemMeta().hasDisplayName() && e.getPlayer().getItemInHand().getItemMeta().getDisplayName().contains("Wand")) {
+			RegularM cast = new Blizzard(plugin, Integer.parseInt(e.getItem().getItemMeta().getDisplayName().split(" ")[1]));
 			cast.cast(e.getPlayer());
 		}
 	}
