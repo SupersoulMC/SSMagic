@@ -2,13 +2,13 @@ package hell.supersoul.magic.core.regular;
 
 import hell.supersoul.magic.Main;
 import hell.supersoul.magic.core.RegularM;
-import net.minecraft.server.v1_12_R1.EntityLightning;
-import net.minecraft.server.v1_12_R1.PacketPlayOutSpawnEntityWeather;
+import net.minecraft.server.v1_11_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
+import org.bukkit.Sound;
+import org.bukkit.craftbukkit.v1_11_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -33,10 +33,10 @@ public class Lightning extends RegularM {
 			vector.normalize();
 			final Integer i2 = i;
 			new BukkitRunnable() {
-				@Override
 	            public void run() {
 					if(!trigger) {
 						this.cancel();
+						return;
 					}
 					Vector vector2 = vector.multiply(i2 / 2.0).clone();
 					Location loc = start.clone().add(vector2.toLocation(caster.getWorld()));
@@ -45,12 +45,16 @@ public class Lightning extends RegularM {
 						if(e instanceof LivingEntity && !e.equals(caster) && !(e instanceof EntityLightning)) {
 							Location loc1 = e.getLocation();
 							EntityLightning el = new EntityLightning(((CraftWorld) Bukkit.getWorld(caster.getWorld().getName())).getHandle(), loc1.getX(), loc1.getY(), loc1.getZ(), true);
-							PacketPlayOutSpawnEntityWeather packet = new PacketPlayOutSpawnEntityWeather(el);
-							for(Player p : Bukkit.getOnlinePlayers()) {
-								((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
+							PacketPlayOutSpawnEntityWeather pposew = new PacketPlayOutSpawnEntityWeather(el);
+							PacketPlayOutNamedSoundEffect pponse = new PacketPlayOutNamedSoundEffect(SoundEffects.dx, SoundCategory.WEATHER, loc1.getX(), loc1.getY(), loc1.getZ(), 1, 1f);
+							for(Entity e2 : loc.getWorld().getNearbyEntities(loc, 64, 64, 64)) {
+								if(e2 instanceof CraftPlayer) {
+									((CraftPlayer) e2).getHandle().playerConnection.sendPacket(pposew);
+									((CraftPlayer) e2).getHandle().playerConnection.sendPacket(pponse);
+								}
 							}
 							((LivingEntity) e).damage(level * 3.0);
-							((LivingEntity) e).setFireTicks(level * 40);
+							e.setFireTicks(level * 40);
 							trigger = false;
 							break;
 						}

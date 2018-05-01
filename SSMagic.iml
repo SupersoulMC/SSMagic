@@ -10,11 +10,11 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../COP 2.0/Dependencies/spigot-1.12.2.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/spigot-1.11.2-R0.1-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../../COP 2.0/Dependencies/spigot-1.12.2.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/spigot-1.11.2-R0.1-SNAPSHOT.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
