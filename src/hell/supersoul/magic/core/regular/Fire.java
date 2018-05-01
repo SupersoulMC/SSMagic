@@ -13,10 +13,11 @@ import hell.supersoul.magic.core.RegularM;
 
 @SuppressWarnings("deprecation")
 public class Fire extends RegularM {
-	
+
 	public Boolean trigger = true;
 	
-	public Fire(Integer level) {
+	public Fire(Main plugin, Integer level) {
+		super.plugin = plugin;
 		super.level = level;
 	}
 	
@@ -51,6 +52,7 @@ public class Fire extends RegularM {
 								}.runTaskLater(Main.instance, i2 * 20);
 							}
 							trigger = false;
+							break;
 						}
 					}
 				}

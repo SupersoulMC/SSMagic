@@ -18,7 +18,7 @@ public class Main extends JavaPlugin {
 		
 		instance = this;
 		
-		Bukkit.getPluginManager().registerEvents(new EventProcesser(), this);
+		Bukkit.getPluginManager().registerEvents(new EventProcesser(this), this);
 		
 	}
 
@@ -27,7 +27,7 @@ public class Main extends JavaPlugin {
 			return false;
 		Player player = (Player) sender;
 		if(cmd.getName().equals("magictest")) {
-			RegularM magic = new Blizzard(1);
+			RegularM magic = new Blizzard(this,1);
 			magic.cast(player);
 		}
 		return false;	

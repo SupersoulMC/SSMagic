@@ -20,7 +20,8 @@ public class Lightning extends RegularM {
 	
 	public Boolean trigger = true;
 	
-	public Lightning(Integer level) {
+	public Lightning(Main plugin, Integer level) {
+		super.plugin = plugin;
 		super.level = level;
 	}
 	
@@ -51,6 +52,7 @@ public class Lightning extends RegularM {
 							((LivingEntity) e).damage(level * 3.0);
 							((LivingEntity) e).setFireTicks(level * 40);
 							trigger = false;
+							break;
 						}
 					}
 				}
