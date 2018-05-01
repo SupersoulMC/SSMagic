@@ -12,11 +12,13 @@ import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import hell.supersoul.magic.core.combo.Berserk;
 import hell.supersoul.magic.core.regular.Lightning;
+import hell.supersoul.magic.managers.ComboManager;
 
 @SuppressWarnings("deprecation")
 public class EventProcesser extends Event implements Listener {

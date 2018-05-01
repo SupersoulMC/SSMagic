@@ -9,6 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import hell.supersoul.magic.core.RegularM;
 import hell.supersoul.magic.core.regular.Blizzard;
 import hell.supersoul.magic.events.EventProcesser;
+import hell.supersoul.magic.managers.ComboManager;
 
 public class Main extends JavaPlugin {
 	
@@ -17,8 +18,9 @@ public class Main extends JavaPlugin {
 	public void onEnable() {
 		
 		instance = this;
-		
-		Bukkit.getPluginManager().registerEvents(new EventProcesser(this), this);
+
+		Bukkit.getPluginManager().registerEvents(new EventProcesser(), this);
+		Bukkit.getPluginManager().registerEvents(new hell.supersoul.magic.managers.EventListener(), this);
 		
 	}
 
