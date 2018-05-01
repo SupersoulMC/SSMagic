@@ -83,7 +83,7 @@ public class ComboManager {
 				if (n > 0)
 					comp = comp + mid.substring(0, n);
 				comp = comp + "¡±c|";
-				if (n < mid.length())
+				if (n + 3 <= mid.length())
 					comp = comp + mid.substring(n + 3);
 				else
 					comp = pre + mid;
