@@ -55,14 +55,14 @@ public class Blizzard extends RegularM {
                                         h1x += l.getX();
                                         h1z += l.getZ();
                                         for(Integer count = 0; count < 4; count++) {
-                                            caster.spawnParticle(Particle.REDSTONE, h1x, hyoriginal + l.getY(), h1z, 0, (204.0 / level) / 255.0, 1.0, 1.0);
+                                            caster.getWorld().spawnParticle(Particle.REDSTONE, h1x, hyoriginal + l.getY(), h1z, 0, (204.0 / level) / 255.0, 1.0, 1.0);
                                         }
                                         Double h2x = d * Math.sin(h2original);
                                         Double h2z = d * Math.cos(h2original);
                                         h2x += l.getX();
                                         h2z += l.getZ();
                                         for(Integer count = 0; count < 4; count++) {
-                                            caster.spawnParticle(Particle.REDSTONE, h2x, hyoriginal + l.getY(), h2z, 0, (204.0 / level) / 255.0, 1.0, 1.0);
+                                            caster.getWorld().spawnParticle(Particle.REDSTONE, h1x, hyoriginal + l.getY(), h1z, 0, (204.0 / level) / 255.0, 1.0, 1.0);
                                         }
                                         hyoriginal += 0.025;
                                         if(hyoriginal > 2.0) {
