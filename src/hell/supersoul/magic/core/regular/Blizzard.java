@@ -32,9 +32,11 @@ public class Blizzard extends RegularM {
 	@Override
 	public boolean cast(Player caster) {
 		if(level == 1) {
+		    Integer count = 0;
 			for(Entity e : caster.getWorld().getNearbyEntities(caster.getLocation(), 3, 3, 3)) {
 				if(!e.equals(caster)) {
 					if(e instanceof LivingEntity) {
+					    count++;
 						((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, level * 5 * 20, level));
 						((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.JUMP, level * 5 * 20, -5));
 						LinkedHashMap<Location, Material> changed = new LinkedHashMap<Location, Material>();
@@ -43,7 +45,7 @@ public class Blizzard extends RegularM {
 				            public void run() {
 								Block b = e.getLocation().getBlock().getRelative(BlockFace.DOWN);
 								if(((LivingEntity) e).hasPotionEffect(PotionEffectType.SLOW)) {
-									e.getWorld().spigot().playEffect(e.getLocation().add(0.0, 1.0, 0.0), Effect.FIREWORKS_SPARK, 0, 0, 0.5f, 0.5f, 0.5f, 0f, 16, 64);
+                                    e.getWorld().spigot().playEffect(e.getLocation().add(0.0, 1.0, 0.0), Effect.FIREWORKS_SPARK, 0, 0, 0.5f, 0.5f, 0.5f, 0f, 16, 64);
 									if(!(b.getState() instanceof InventoryHolder) && !(b.getType() == Material.AIR)) {
 										if(!changed.containsKey(b.getLocation())) {
 											changed.put(b.getLocation(), b.getType());
@@ -67,6 +69,9 @@ public class Blizzard extends RegularM {
 					}
 				}
 			}
+			if(count == 0) {
+                caster.getWorld().spigot().playEffect(caster.getLocation().add(0.0, 1.0, 0.0), Effect.FIREWORKS_SPARK, 0, 0, 3f, 2f, 3f, 10f, 16, 64);
+            }
 		} else {
 			for(Entity e : caster.getWorld().getNearbyEntities(caster.getLocation(), level * 2, 3, level * 2)) {
 				if(!e.equals(caster)) {

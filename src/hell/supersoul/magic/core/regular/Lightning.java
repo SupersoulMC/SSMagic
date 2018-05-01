@@ -1,20 +1,19 @@
 package hell.supersoul.magic.core.regular;
 
+import hell.supersoul.magic.Main;
+import hell.supersoul.magic.core.RegularM;
+import net.minecraft.server.v1_12_R1.EntityLightning;
+import net.minecraft.server.v1_12_R1.PacketPlayOutSpawnEntityWeather;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_11_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
-
-import hell.supersoul.magic.Main;
-import hell.supersoul.magic.core.RegularM;
-import net.minecraft.server.v1_11_R1.EntityLightning;
-import net.minecraft.server.v1_11_R1.PacketPlayOutSpawnEntityWeather;
 
 @SuppressWarnings("deprecation")
 public class Lightning extends RegularM {

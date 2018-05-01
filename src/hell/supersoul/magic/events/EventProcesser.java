@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import hell.supersoul.magic.core.RegularM;
+import hell.supersoul.magic.core.regular.Blizzard;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -30,7 +32,7 @@ public class EventProcesser extends Event implements Listener {
 	@EventHandler
 	public void cast(PlayerInteractEvent e) {
 		if(e.getPlayer().getItemInHand() != null && e.getPlayer().getItemInHand().hasItemMeta() && e.getPlayer().getItemInHand().getItemMeta().hasDisplayName() && e.getPlayer().getItemInHand().getItemMeta().getDisplayName().equals("Wand")) {
-			Lightning cast = new Lightning(32767);
+			RegularM cast = new Blizzard(1);
 			cast.cast(e.getPlayer());
 		}
 	}
