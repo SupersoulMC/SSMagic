@@ -31,6 +31,7 @@ public class Main extends JavaPlugin {
 			magic.cast(player);
 		}
 		return false;
+		
 	}
 
 }
