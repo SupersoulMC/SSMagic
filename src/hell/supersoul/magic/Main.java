@@ -30,8 +30,7 @@ public class Main extends JavaPlugin {
 			RegularM magic = new Blizzard(1);
 			magic.cast(player);
 		}
-		return false;
-		
+		return false;	
 	}
 
 }
