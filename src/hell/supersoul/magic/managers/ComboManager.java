@@ -70,7 +70,7 @@ public class ComboManager {
 				else if (mid.indexOf("¡±6") > comp.length())
 					comp = comp + "¡±e";
 				else comp = comp + "¡±6";
-				if (mid.length() < n)
+				if (mid.length() > n)
 				comp = comp + mid.substring(n+1);
 				comp = comp + suf;
 				player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(comp));
