@@ -41,7 +41,7 @@ public class ComboManager {
 		if (!player.isOnline())
 			return;
 		ItemStack item = player.getItemOnCursor();
-		if (item == null) {
+		if (item == null || item.getType().equals(Material.AIR)) {
 			hitTicks.add(10);
 			hitTicks.add(6);
 			hitTicks.add(4);
@@ -80,15 +80,5 @@ public class ComboManager {
 				}
 			}
 		}.runTaskTimer(Main.instance, 0, 1);
-	}
-	
-	public class EventListner implements Listener {
-		
-		@EventHandler
-		public void onPlayerInteract(PlayerInteractEvent event) {
-			if (event.getAction().equals(Action.LEFT_CLICK_AIR) || event.getAction().equals(Action.LEFT_CLICK_BLOCK))
-				ComboManager.executeHit(event.getPlayer());
-		}
-		
 	}
 }
