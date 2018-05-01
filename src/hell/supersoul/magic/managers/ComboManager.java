@@ -33,10 +33,12 @@ public class ComboManager {
 	}
 
 	static HashMap<Player, HitLevel> currentHit = new HashMap<>();
-	static HashMap<Player, HitLevel> lastHit = new HashMap<>();
+	static HashMap<Player, Integer> currentHitTask = new HashMap<>();
 
 	// Make the combo bar, hit ticks measured in ticks
 	public static void executeHit(Player player) {
+		if (currentHitTask.containsKey(player)) 
+			Bukkit.getScheduler().cancelTask(currentHitTask.get(player));
 		ArrayList<Integer> hitTicks = new ArrayList<>();
 		if (player == null)
 			return;
@@ -56,13 +58,13 @@ public class ComboManager {
 		int t = total;
 
 		String l = "";
-		if (!lastHit.containsKey(player))
+		if (!currentHit.containsKey(player))
 			l = "7";
-		else if (lastHit.get(player).equals(HitLevel.ZERO))
+		else if (currentHit.get(player).equals(HitLevel.ZERO))
 			l = "7";
-		else if (lastHit.get(player).equals(HitLevel.ONE))
+		else if (currentHit.get(player).equals(HitLevel.ONE))
 			l = "e";
-		else if (lastHit.get(player).equals(HitLevel.TWO))
+		else if (currentHit.get(player).equals(HitLevel.TWO))
 			l = "6";
 		
 		String pre = "¡±" + l + "¡±l> ";
@@ -74,9 +76,10 @@ public class ComboManager {
 		String suf = " ¡±" + l + "¡±l<";
 		String mid = bar;
 
-		new BukkitRunnable() {
+		int id = new BukkitRunnable() {
 			int n = 0;
-
+			int count = 0;
+			
 			@Override
 			public void run() {
 				String comp = pre;
@@ -90,11 +93,23 @@ public class ComboManager {
 				comp = comp + suf;
 				player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(comp));
 
+				if (count <= hitTicks.get(0))
+					currentHit.put(player, HitLevel.ZERO);
+				else if (count - hitTicks.get(0) <= hitTicks.get(1))
+					currentHit.put(player, HitLevel.ONE);
+				else if (count - hitTicks.get(0) - hitTicks.get(1)<= hitTicks.get(2))
+					currentHit.put(player, HitLevel.TWO);
+				else currentHit.put(player, HitLevel.ZERO);
+				count++;
 				n = n + 3;
 				if (n > mid.length()) {
+					currentHitTask.remove(player);
+					currentHit.remove(player);
+					player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(""));
 					this.cancel();
 				}
 			}
-		}.runTaskTimer(Main.instance, 0, 1);
+		}.runTaskTimer(Main.instance, 0, 1).getTaskId();
+		currentHitTask.put(player, id);
 	}
 }
