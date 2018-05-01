@@ -16,5 +16,7 @@ public class Main extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new EventProcesser(), this);
 		
 	}
+	
+	//Testing
 
 }
