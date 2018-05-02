@@ -44,7 +44,7 @@ public class Fire extends RegularM {
 									@Override
 									public void run() {
 										if(e.isDead()) {
-											this.cancel();
+											return;
 										}
 										((LivingEntity) e).damage(level);
 										e.getWorld().spigot().playEffect(e.getLocation().add(0.0, 1.0, 0.0), Effect.FLAME, 0, 0, 0.5f, 0.5f, 0.5f, 0f, 16, 64);

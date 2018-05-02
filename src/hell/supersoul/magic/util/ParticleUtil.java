@@ -12,7 +12,7 @@ public class ParticleUtil {
          * When red value == 0 then it will always be red no matter what the other colour values are,
          * that's why if red == 0 set it to Float.MIN_VALUE
          */
-        w.spawnParticle(Particle.REDSTONE, x, y, z, 0, r == 0 ? Float.MIN_VALUE : r / 255.0, g / 255.0, b / 255.0, java.util.Optional.of(1));
+        w.spawnParticle(Particle.REDSTONE, x, y, z, 0, r == 0 ? Float.MIN_VALUE : r / 255.0, g / 255.0, b / 255.0);
     }
 
     public static void createAOEParticles(Player p, double radius, double angle, double red, double green, double blue, int count) {
