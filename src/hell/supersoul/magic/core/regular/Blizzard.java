@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import hell.supersoul.magic.util.ParticleUtil;
 import hell.supersoul.magic.util.Util;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -64,18 +65,12 @@ public class Blizzard extends RegularM {
                 if(end) {
                     this.cancel();
                 }
-                Integer d = level * 2;
-                for(Integer i = 0; i <= 360; i++) {
-                    if(end) {
-                        return;
-                    }
-                    Location l = caster.getLocation();
-                    Double hx = d * Math.sin(i);
-                    Double hz = d * Math.cos(i);
-                    hx += l.getX();
-                    hz += l.getZ();
-                    Util.reddust(world, hx, l.getY(), hz, 204.0 / level, 255.0, 255.0);
+                Double d = level * 2.0;
+                if(end) {
+                    return;
                 }
+                Location l = caster.getLocation();
+                ParticleUtil.createAOEParticles(caster, d, 0.0, 204.0 / level, 255.0, 255.0, 1);
             }
         }.runTaskTimer(plugin, 0, 2);
         new BukkitRunnable() {
@@ -124,20 +119,8 @@ public class Blizzard extends RegularM {
                         return;
                     }
                     Location l = caster.getLocation();
-                    Double h1x = d * Math.sin(h1original);
-                    Double h1z = d * Math.cos(h1original);
-                    h1x += l.getX();
-                    h1z += l.getZ();
-                    for(Integer count = 0; count < 4; count++) {
-                        Util.reddust(world, h1x, hyoriginal + l.getY(), h1z, 204.0 / level, 255.0, 255.0);
-                    }
-                    Double h2x = d * Math.sin(h2original);
-                    Double h2z = d * Math.cos(h2original);
-                    h2x += l.getX();
-                    h2z += l.getZ();
-                    for(Integer count = 0; count < 4; count++) {
-                        Util.reddust(world, h2x, hyoriginal + l.getY(), h1x, 204.0 / level, 255.0, 255.0);
-                    }
+                    ParticleUtil.createHelixParticles(l.getWorld(), l.getX(), hyoriginal + l.getY(), l.getZ(), d, h1original, 204.0 / level, 255.0, 255.0, 4);
+                    ParticleUtil.createHelixParticles(l.getWorld(), l.getX(), hyoriginal + l.getY(), l.getZ(), d, h2original, 204.0 / level, 255.0, 255.0, 4);
                     hyoriginal += 0.025;
                     if(hyoriginal > 2.0) {
                         hyoriginal = 0.0;

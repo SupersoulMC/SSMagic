@@ -48,8 +48,4 @@ public class Util {
 		return dot > 0.99D;
 	}
 
-	public static void reddust(World w, Double x, Double y, Double z, Double r, Double g, Double b) {
-		w.spawnParticle(Particle.REDSTONE, x, y, z, 0, r / 255.0, g / 255.0, b / 255.0);
-	}
-
 }
