@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import hell.supersoul.magic.util.Util;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -29,6 +30,7 @@ public class Blizzard extends RegularM {
     Integer time = 0;
     Boolean end = false;
     List<Entity> affected = new ArrayList<>();
+    World world;
     LinkedHashMap<Location, Material> changed = new LinkedHashMap<Location, Material>();
 
 	public Blizzard(Main plugin, Integer level) {
@@ -68,20 +70,21 @@ public class Blizzard extends RegularM {
                         return;
                     }
                     Location l = caster.getLocation();
-                    Double h1x = d * Math.sin(i);
-                    Double h1z = d * Math.cos(i);
-                    h1x += l.getX();
-                    h1z += l.getZ();
-                    caster.getWorld().spawnParticle(Particle.REDSTONE, h1x, l.getY(), h1z, 0, (204.0 / level) / 255.0, 1.0, 1.0);
+                    Double hx = d * Math.sin(i);
+                    Double hz = d * Math.cos(i);
+                    hx += l.getX();
+                    hz += l.getZ();
+                    Util.reddust(world, hx, l.getY(), hz, 204.0 / level, 255.0, 255.0);
                 }
             }
-        }.runTaskTimer(plugin, 0, 5);
+        }.runTaskTimer(plugin, 0, 2);
         new BukkitRunnable() {
             @Override
             public void run() {
                 if (end) {
                     this.cancel();
                 }
+                world = caster.getWorld();
                 List<Entity> newaffected = new ArrayList<>();
                 for (Entity e : caster.getWorld().getNearbyEntities(caster.getLocation(), level * 2, 3, level * 2)) {
                     if (!e.equals(caster) && !affected.contains(e)) {
@@ -126,14 +129,14 @@ public class Blizzard extends RegularM {
                     h1x += l.getX();
                     h1z += l.getZ();
                     for(Integer count = 0; count < 4; count++) {
-                        caster.getWorld().spawnParticle(Particle.REDSTONE, h1x, hyoriginal + l.getY(), h1z, 0, (204.0 / level) / 255.0, 1.0, 1.0);
+                        Util.reddust(world, h1x, hyoriginal + l.getY(), h1z, 204.0 / level, 255.0, 255.0);
                     }
                     Double h2x = d * Math.sin(h2original);
                     Double h2z = d * Math.cos(h2original);
                     h2x += l.getX();
                     h2z += l.getZ();
                     for(Integer count = 0; count < 4; count++) {
-                        caster.getWorld().spawnParticle(Particle.REDSTONE, h2x, hyoriginal + l.getY(), h2z, 0, (204.0 / level) / 255.0, 1.0, 1.0);
+                        Util.reddust(world, h2x, hyoriginal + l.getY(), h1x, 204.0 / level, 255.0, 255.0);
                     }
                     hyoriginal += 0.025;
                     if(hyoriginal > 2.0) {
