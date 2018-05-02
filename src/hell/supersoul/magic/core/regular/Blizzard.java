@@ -26,7 +26,7 @@ import org.bukkit.scheduler.BukkitTask;
 public class Blizzard extends RegularM {
 
     Double hyoriginal = 0.0;
-    Double h1original = 0.0, h2original = 180.0;
+    Double horiginal = 0.0;
     Double d = 1.2;
     Integer time = 0;
     Boolean end = false;
@@ -119,14 +119,13 @@ public class Blizzard extends RegularM {
                         return;
                     }
                     Location l = caster.getLocation();
-                    ParticleUtil.createHelixParticles(l.getWorld(), l.getX(), hyoriginal + l.getY(), l.getZ(), d, h1original, 204.0 / level, 255.0, 255.0, 4);
-                    ParticleUtil.createHelixParticles(l.getWorld(), l.getX(), hyoriginal + l.getY(), l.getZ(), d, h2original, 204.0 / level, 255.0, 255.0, 4);
-                    hyoriginal += 0.025;
+                    ParticleUtil.createHelixParticles(l.getWorld(), l.getX(), hyoriginal + l.getY(), l.getZ(), d, horiginal, 204.0 / level, 255.0, 255.0, 4);
+                    ParticleUtil.createHelixParticles(l.getWorld(), l.getX(), hyoriginal + l.getY(), l.getZ(), d, horiginal + 135, 204.0 / level, 255.0, 255.0, 4);
+                    hyoriginal += 0.1;
                     if(hyoriginal > 2.0) {
                         hyoriginal = 0.0;
                     }
-                    h1original += 2.25;
-                    h2original += 2.25;
+                    horiginal += 0.25;
                 }
             }
         }.runTaskTimer(plugin, 0, 1);
