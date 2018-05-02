@@ -36,7 +36,7 @@ public class ParticleUtil {
         }
     }
     
-    public void createDefenseParticles(Player player, Double radius, Double angle, Double red, Double green, Double blue) {
+    public void createDefenseParticles(Player p, Double radius, Double angle, Double red, Double green, Double blue) {
         // Hell asked me to make this, not sure what the use is for so I place it here for now
 	// Default values are: red: 0, green: 127, blue: 255, radius: 1, angle: 90
 		Location loc = player.getLocation().clone();
