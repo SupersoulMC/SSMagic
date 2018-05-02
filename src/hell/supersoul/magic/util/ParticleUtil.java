@@ -12,7 +12,7 @@ public class ParticleUtil {
          * When red value == 0 then it will always be red no matter what the other colour values are,
          * that's why if red == 0 set it to Float.MIN_VALUE
          */
-        w.spawnParticle(Particle.REDSTONE, x, y, z, 0, r == 0 ? Float.MIN_VALUE : red / 255.0, g / 255.0, b / 255.0, 1);
+        w.spawnParticle(Particle.REDSTONE, x, y, z, 0, r == 0 ? Float.MIN_VALUE : r / 255.0, g / 255.0, b / 255.0, java.util.Optional.of(1));
     }
 
     public static void createAOEParticles(Player p, double radius, double angle, double red, double green, double blue, int count) {
@@ -57,14 +57,14 @@ public class ParticleUtil {
             
 			// Spawning the ring.
 			for (double y = loc.getY() + 0.7; y <= loc.getY() + 1.7; y += 0.5)
-                redDust(p.getWorld(), x, y, z, red, green, blue)
+                redDust(p.getWorld(), x, y, z, red, green, blue);
 		}
 		// The line at the back
 		for (double y = loc.getY() + 0.7; y <= loc.getY() + 1.7; y += 0.1) {
 			double back = yaw < 180 ? yaw + 180 : yaw - 180;
 			double z = loc.getZ() + Math.cos(Math.toRadians(back)) * radius;
 			double x = loc.getX() - Math.sin(Math.toRadians(back)) * radius;
-			redDust(p.getWorld(), x, y, z, red, green, blue)
+			redDust(p.getWorld(), x, y, z, red, green, blue);
 		}
 	}
 
