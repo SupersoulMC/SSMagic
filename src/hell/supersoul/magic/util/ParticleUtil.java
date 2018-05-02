@@ -15,28 +15,26 @@ public class ParticleUtil {
         w.spawnParticle(Particle.REDSTONE, x, y, z, 0, r == 0 ? Float.MIN_VALUE : red / 255.0, g / 255.0, b / 255.0, 1);
     }
 
-    public static void createAOEParticles(Player p, Double radius, Double angle, Double red, Double green, Double blue, Integer count) {
+    public static void createAOEParticles(Player p, double radius, double angle, double red, double green, double blue, int count) {
         Location loc = p.getLocation().clone();
         
         // The ring with 4 degree separation
-        for(Integer i = 0; i <= 360; i += 4) {
-            Double pointx = loc.getX() + radius * Math.sin(Math.toRadians(i));
-            Double pointz = loc.getZ() + radius * Math.cos(Math.toRadians(i));
+        for(int i = 0; i <= 360; i += 4) {
+            double pointx = loc.getX() + radius * Math.sin(Math.toRadians(i));
+            double pointz = loc.getZ() + radius * Math.cos(Math.toRadians(i));
             redDust(p.getWorld(), pointx, loc.getY(), pointz, red, green, blue);
         }
     }
 
-    public static void createHelixParticles(World w, Double x, Double y, Double z, Double radius, Double angle, Double red, Double green, Double blue, Integer count) {
-        Double h1x = radius * Math.sin(Math.toRadians(angle));
-        Double h1z = radius * Math.cos(Math.toRadians(angle));
-        h1x += x;
-        h1z += z;
-        for(Integer i = 0; i < count; i++) {
+    public static void createHelixParticles(World w, double x, double y, double z, double radius, double angle, double red, double green, double blue, int count) {
+        double h1x = x + radius * Math.sin(Math.toRadians(angle));
+        double h1z = z + radius * Math.cos(Math.toRadians(angle));
+        for(int i = 0; i < count; i++) {
             redDust(w, h1x, y, h1z, red, green, blue);
         }
     }
     
-    public void createDefenseParticles(Player p, Double radius, Double angle, Double red, Double green, Double blue) {
+    public void createDefenseParticles(Player p, double radius, double angle, double red, double green, double blue) {
         // Hell asked me to make this, not sure what the use is for so I place it here for now
 	// Default values are: red: 0, green: 127, blue: 255, radius: 1, angle: 90
 		Location loc = p.getLocation().clone();
