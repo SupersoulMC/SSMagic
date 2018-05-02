@@ -12,6 +12,10 @@ public class Berserk extends ComboM {
 
 	public Berserk(Integer level) {
 		super.level = level;
+		this.comboTotal = 5;
+		this.comboHitTicks.add(7);
+		this.comboHitTicks.add(5);
+		this.comboHitTicks.add(3);
 	}
 
 	@Override
