@@ -38,7 +38,7 @@ public class EventProcesser extends Event implements Listener {
 	@EventHandler
 	public void cast(PlayerInteractEvent e) {
 		if(e.getPlayer().getItemInHand() != null && e.getPlayer().getItemInHand().hasItemMeta() && e.getPlayer().getItemInHand().getItemMeta().hasDisplayName() && e.getPlayer().getItemInHand().getItemMeta().getDisplayName().contains("Wand")) {
-			RegularM cast = new Lightning(plugin, Integer.parseInt(e.getItem().getItemMeta().getDisplayName().split(" ")[1]));
+			RegularM cast = new Blizzard(plugin, Integer.parseInt(e.getItem().getItemMeta().getDisplayName().split(" ")[1]));
 			cast.cast(e.getPlayer());
 		}
 	}
