@@ -27,7 +27,7 @@ public class Water extends RegularM {
 				Location casterposition = caster.getLocation().add(0, 1, 0);
 			    for(Integer i = 1; i < 11; i++) {
 			        final Integer i2 = i;
-			        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
+			        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
 						public void run() {
 			                caster.getWorld().spigot().playEffect(Util.findPointOnLineBetweenPoints(casterposition.toVector(), e1.getLocation().add(0, 1, 0).toVector(), (i2 / 10.0)).toLocation(caster.getWorld()), Effect.SPLASH, 0, 0, 0, 0, 0, 0, 10, 128);
 			                if(i2.equals(9)) {
@@ -40,7 +40,7 @@ public class Water extends RegularM {
 											}
 											((LivingEntity) e1).damage(level * 0.5);
 										}
-									}.runTaskLater(Main.instance, i3 * 10);
+									}.runTaskLater(Main.getInstance(), i3 * 10);
 			                    }
 			                }
 			            }

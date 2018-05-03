@@ -109,7 +109,7 @@ public class ComboManager {
 					this.cancel();
 				}
 			}
-		}.runTaskTimer(Main.instance, 0, 1).getTaskId();
+		}.runTaskTimer(Main.getInstance(), 0, 1).getTaskId();
 		currentHitTask.put(player, id);
 	}
 }

@@ -49,7 +49,7 @@ public class Fire extends RegularM {
 										((LivingEntity) e).damage(level);
 										e.getWorld().spigot().playEffect(e.getLocation().add(0.0, 1.0, 0.0), Effect.FLAME, 0, 0, 0.5f, 0.5f, 0.5f, 0f, 16, 64);
 									}
-								}.runTaskLater(Main.instance, i2 * 20);
+								}.runTaskLater(Main.getInstance(), i2 * 20);
 							}
 							trigger = false;
 							break;

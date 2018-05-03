@@ -1,6 +1,7 @@
 name: SSMagic
 main: hell.supersoul.magic.Main
 version: 1.01
+depend: [ProtocolLib]
 
 commands:
     magictest:
