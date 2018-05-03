@@ -25,11 +25,9 @@ public class InventoryPacketListener extends PacketAdapter {
 		if (event.isCancelled())
 			return;
 		if (event.getPacketType() == PacketType.Play.Server.SET_SLOT) {
-			event.getPlayer().sendMessage("FIRED");
 			int slot = event.getPacket().getIntegers().read(1) - 36;
 			if (slot != event.getPlayer().getInventory().getHeldItemSlot())
 				return;
-			event.getPlayer().sendMessage("The slot is " + slot);
 			EquipmentManager.checkAndUpdate(event.getPlayer(), slot);
 		}
 	}

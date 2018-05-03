@@ -31,15 +31,12 @@ public class LoreManager {
 	//Converts string lore to a MagicItem instance
 	public static MagicItem getMagicItem(String lore) {
 		
-		Bukkit.getLogger().info(lore);
-		
 		if (lore == null)
 			return null;
 		
 		//Initialize variables for looping
 		lore = Util.convertToVisibleString(lore);
 		String[] statements = lore.split("\\|");
-		Bukkit.getLogger().info(statements[0]);
 		if (!statements[0].equals("SSMAGIC"))
 			return null;
 		int slots = 0;
@@ -47,13 +44,11 @@ public class LoreManager {
 		ArrayList<Magic> magics = new ArrayList<>();
 		HashMap<Magic, Integer> magicEXP = new HashMap<>();
 		
-		Bukkit.getLogger().info("-2");
 		//Loops through the magic statements in the lore
 		for (String string : statements) {
 			
 			//Sets the slots
 			if (string.startsWith("slots")) {
-				Bukkit.getLogger().info("-1");
 				String[] words = string.split(" ");
 				if (words.length <= 1)
 					return null;
@@ -67,7 +62,6 @@ public class LoreManager {
 			
 			//Sets the item type
 			else if (string.startsWith("itemType")) {
-				Bukkit.getLogger().info("0");
 				String[] words = string.split(" ");
 				if (words.length <= 1)
 					return null;
@@ -81,7 +75,6 @@ public class LoreManager {
 			
 			//Sets the magics
 			else if (string.startsWith("MAGIC")) {
-				Bukkit.getLogger().info("1");
 				String[] words = string.split(" ");
 				if (words.length < 5)
 					return null;
@@ -106,11 +99,9 @@ public class LoreManager {
 					e.printStackTrace();
 					return null;
 				}
-				Bukkit.getLogger().info("2");
 				if (magic == null)
 					return null;
 
-				Bukkit.getLogger().info("3");
 				magics.add(magic);
 				magicEXP.put(magic, expLevel);
 			}

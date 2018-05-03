@@ -85,7 +85,6 @@ public class EquipmentManager {
 
 		// Updates the equipment data of the player.
 		equipmentData.get(player).put(eSlot, magicItem);
-		player.sendMessage("updated " + magicItem.getMagics().get(0).getClass().getName());
 
 	}
 

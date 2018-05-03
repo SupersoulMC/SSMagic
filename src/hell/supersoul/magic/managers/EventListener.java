@@ -63,11 +63,9 @@ public class EventListener implements Listener {
 		/*if (event.getNewItems().size() > 1)
 			return;*/
 		Player player = (Player) event.getWhoClicked();
-		Bukkit.getLogger().info("!");
 		for (int slot : event.getInventorySlots()) {
 			if (slot != player.getInventory().getHeldItemSlot())
 				continue;
-			Bukkit.getLogger().info("slot" + slot);
 			EquipmentManager.checkAndUpdate(player, slot, event.getOldCursor());
 		}
 	}
