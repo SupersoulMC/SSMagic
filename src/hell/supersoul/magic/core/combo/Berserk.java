@@ -1,12 +1,11 @@
 package hell.supersoul.magic.core.combo;
 
+import hell.supersoul.magic.core.ComboM;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-
-import hell.supersoul.magic.core.ComboM;
 
 public class Berserk extends ComboM {
 

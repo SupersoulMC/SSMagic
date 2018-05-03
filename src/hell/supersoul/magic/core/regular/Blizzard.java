@@ -1,12 +1,8 @@
 package hell.supersoul.magic.core.regular;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map.Entry;
-
+import hell.supersoul.magic.Main;
+import hell.supersoul.magic.core.RegularM;
 import hell.supersoul.magic.util.ParticleUtil;
-import hell.supersoul.magic.util.Util;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -18,9 +14,10 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import hell.supersoul.magic.Main;
-import hell.supersoul.magic.core.RegularM;
-import org.bukkit.scheduler.BukkitTask;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map.Entry;
 
 @SuppressWarnings("deprecation")
 public class Blizzard extends RegularM {

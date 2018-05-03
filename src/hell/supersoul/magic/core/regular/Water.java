@@ -1,5 +1,8 @@
 package hell.supersoul.magic.core.regular;
 
+import hell.supersoul.magic.Main;
+import hell.supersoul.magic.core.RegularM;
+import hell.supersoul.magic.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -7,10 +10,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import hell.supersoul.magic.Main;
-import hell.supersoul.magic.core.RegularM;
-import hell.supersoul.magic.util.Util;
 
 @SuppressWarnings("deprecation")
 public class Water extends RegularM {

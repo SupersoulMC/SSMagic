@@ -1,7 +1,8 @@
 package hell.supersoul.magic;
 
-import java.util.ArrayList;
-
+import com.comphenix.protocol.ProtocolLibrary;
+import hell.supersoul.magic.events.EventProcesser;
+import hell.supersoul.magic.util.InventoryPacketListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -21,6 +22,8 @@ import hell.supersoul.magic.core.regular.Lightning;
 import hell.supersoul.magic.events.EventProcesser;
 import hell.supersoul.magic.managers.ComboManager;
 import hell.supersoul.magic.util.InventoryPacketListener;
+
+import java.util.ArrayList;
 
 public class Main extends JavaPlugin {
 	

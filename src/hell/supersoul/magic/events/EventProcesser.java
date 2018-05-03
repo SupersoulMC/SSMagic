@@ -3,10 +3,7 @@ package hell.supersoul.magic.events;
 import hell.supersoul.magic.Main;
 import hell.supersoul.magic.core.RegularM;
 import hell.supersoul.magic.core.combo.Berserk;
-import hell.supersoul.magic.core.regular.Blizzard;
-import hell.supersoul.magic.core.regular.Fire;
 import hell.supersoul.magic.core.regular.Lightning;
-import hell.supersoul.magic.core.regular.Water;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -40,8 +37,9 @@ public class EventProcesser extends Event implements Listener {
 	@EventHandler
 	public void cast(PlayerInteractEvent e) {
 		if(e.getPlayer().getItemInHand() != null && e.getPlayer().getItemInHand().hasItemMeta() && e.getPlayer().getItemInHand().getItemMeta().hasDisplayName() && e.getPlayer().getItemInHand().getItemMeta().getDisplayName().contains("Wand")) {
-			RegularM cast = new Fire(Integer.parseInt(e.getItem().getItemMeta().getDisplayName().split(" ")[1]));
+			RegularM cast = new Lightning(Integer.parseInt(e.getItem().getItemMeta().getDisplayName().split(" ")[1]));
 			cast.cast(e.getPlayer());
+			e.setCancelled(true);
 		}
 	}
 	

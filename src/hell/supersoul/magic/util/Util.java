@@ -1,14 +1,12 @@
 package hell.supersoul.magic.util;
 
-import java.util.Random;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Particle;
-import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
+
+import java.util.Random;
 
 public class Util {
 	

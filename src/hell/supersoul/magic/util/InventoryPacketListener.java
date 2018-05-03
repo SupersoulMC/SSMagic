@@ -1,14 +1,10 @@
 package hell.supersoul.magic.util;
 
-import org.bukkit.Bukkit;
-import org.bukkit.event.EventPriority;
-
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
-
 import hell.supersoul.magic.Main;
 import hell.supersoul.magic.managers.EquipmentManager;
 

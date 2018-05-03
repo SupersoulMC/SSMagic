@@ -1,6 +1,7 @@
 package hell.supersoul.magic.core.regular;
 
-import org.bukkit.Effect;
+import hell.supersoul.magic.Main;
+import hell.supersoul.magic.core.RegularM;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.World;
@@ -9,9 +10,6 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
-
-import hell.supersoul.magic.Main;
-import hell.supersoul.magic.core.RegularM;
 
 @SuppressWarnings("deprecation")
 public class Fire extends RegularM {
