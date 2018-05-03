@@ -4,6 +4,8 @@ import hell.supersoul.magic.core.Magic;
 import hell.supersoul.magic.core.MagicItem;
 import hell.supersoul.magic.core.MagicItem.MagicItemType;
 import hell.supersoul.magic.util.Util;
+
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
