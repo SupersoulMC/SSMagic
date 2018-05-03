@@ -33,7 +33,7 @@ public class ComboManager {
 			comboCount.put(player, new ArrayList<>());
 		if (currentHitTask.containsKey(player)) {
 			Bukkit.getScheduler().cancelTask(currentHitTask.get(player));
-			if (currentHit.get(player).equals(HitLevel.ZERO))
+			if (currentHit.containsKey(player) && currentHit.get(player).equals(HitLevel.ZERO))
 				comboCount.get(player).clear();
 			else
 				comboCount.get(player).add(currentHit.get(player));
