@@ -27,7 +27,7 @@ public class Blizzard extends RegularM {
     Double d = 1.0;
     Integer time = 0;
     Boolean end = false;
-    List<Entity> affected = new ArrayList<>();
+    List<LivingEntity> affected = new ArrayList<>();
     World world;
     LinkedHashMap<Location, Material> changed = new LinkedHashMap<Location, Material>();
 
@@ -76,20 +76,20 @@ public class Blizzard extends RegularM {
                     this.cancel();
                 }
                 world = caster.getWorld();
-                List<Entity> newaffected = new ArrayList<>();
+                List<LivingEntity> newaffected = new ArrayList<>();
                 for (Entity e : caster.getWorld().getNearbyEntities(caster.getLocation(), level * 2, 3, level * 2)) {
                     if (!e.equals(caster) && !affected.contains(e)) {
                         if (e instanceof LivingEntity) {
-                            newaffected.add(e);
+                            newaffected.add((LivingEntity) e);
                         }
                     }
                 }
                 affected = newaffected;
-                for (Entity e : affected) {
-                    ((LivingEntity) e).removePotionEffect(PotionEffectType.SLOW);
-                    ((LivingEntity) e).removePotionEffect(PotionEffectType.JUMP);
-                    ((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, level * 3 * 20, level));
-                    ((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.JUMP, level * 3 * 20, -5));
+                for (LivingEntity e : affected) {
+                    e.removePotionEffect(PotionEffectType.SLOW);
+                    e.removePotionEffect(PotionEffectType.JUMP);
+                    e.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, level * 3 * 20, level));
+                    e.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, level * 3 * 20, -5));
                     Block b = e.getLocation().getBlock().getRelative(BlockFace.DOWN);
                     e.getWorld().spigot().playEffect(e.getLocation().add(0.0, 1.0, 0.0), Effect.FIREWORKS_SPARK, 0, 0, 0.5f, 0.5f, 0.5f, 0f, 1, 64);
                     if (!(b.getType() == Material.AIR) && !(b instanceof InventoryHolder)) {

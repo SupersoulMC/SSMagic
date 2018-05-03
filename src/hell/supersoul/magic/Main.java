@@ -1,42 +1,30 @@
 package hell.supersoul.magic;
 
 import com.comphenix.protocol.ProtocolLibrary;
+import hell.supersoul.magic.core.RegularM;
+import hell.supersoul.magic.core.regular.Lightning;
 import hell.supersoul.magic.events.EventProcesser;
 import hell.supersoul.magic.util.InventoryPacketListener;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.events.PacketListener;
-
-import hell.supersoul.magic.core.RegularM;
-import hell.supersoul.magic.core.regular.Blizzard;
-import hell.supersoul.magic.core.regular.Fire;
-import hell.supersoul.magic.core.regular.Lightning;
-import hell.supersoul.magic.events.EventProcesser;
-import hell.supersoul.magic.managers.ComboManager;
-import hell.supersoul.magic.util.InventoryPacketListener;
-
-import java.util.ArrayList;
 
 public class Main extends JavaPlugin {
 	
 	static Main instance;
+	EventProcesser eventProcessor;
 	
 	@Override
 	public void onEnable() {
 		
 		instance = this;
-		
+
+		eventProcessor = new EventProcesser(this);
 		new InventoryPacketListener();
 		
-		Bukkit.getPluginManager().registerEvents(new EventProcesser(this), this);
+		Bukkit.getPluginManager().registerEvents(eventProcessor, this);
 		Bukkit.getPluginManager().registerEvents(new hell.supersoul.magic.managers.EventListener(), this);
 		
 	}
@@ -71,6 +59,10 @@ public class Main extends JavaPlugin {
 	
 	public static Main getInstance() {
 		return instance;
+	}
+
+	public EventProcesser getEventProcessor() {
+		return eventProcessor;
 	}
 
 }
