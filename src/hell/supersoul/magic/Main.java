@@ -17,6 +17,7 @@ import com.comphenix.protocol.events.PacketListener;
 import hell.supersoul.magic.core.RegularM;
 import hell.supersoul.magic.core.regular.Blizzard;
 import hell.supersoul.magic.core.regular.Fire;
+import hell.supersoul.magic.core.regular.Lightning;
 import hell.supersoul.magic.events.EventProcesser;
 import hell.supersoul.magic.managers.ComboManager;
 import hell.supersoul.magic.util.InventoryPacketListener;
@@ -47,10 +48,11 @@ public class Main extends JavaPlugin {
 			return false;
 		Player player = (Player) sender;
 		if(cmd.getName().equals("magictest")) {
-			/*
-			RegularM magic = new Fire(this, Integer.parseInt(args[0]));
+			
+			RegularM magic = new Lightning(Integer.parseInt(args[0]));
 			magic.cast(player);
-			*/
+			
+			/*
 			ItemStack item = new ItemStack(Material.WOOD_SWORD);
 			ItemMeta meta = item.getItemMeta();
 			ArrayList<String> lore = new ArrayList<>();
@@ -59,6 +61,7 @@ public class Main extends JavaPlugin {
 			meta.setLore(lore);
 			item.setItemMeta(meta);
 			player.getInventory().addItem(item);
+			*/
 		}
 		return false;	
 	}
