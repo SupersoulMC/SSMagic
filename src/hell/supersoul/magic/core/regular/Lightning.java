@@ -44,7 +44,7 @@ public class Lightning extends RegularM {
                             Location loc1 = e.getLocation();
                             EntityLightning el = new EntityLightning(((CraftWorld) Bukkit.getWorld(caster.getWorld().getName())).getHandle(), loc1.getX(), loc1.getY(), loc1.getZ(), true);
                             PacketPlayOutSpawnEntityWeather pposew = new PacketPlayOutSpawnEntityWeather(el);
-                            PacketPlayOutNamedSoundEffect pponse = new PacketPlayOutNamedSoundEffect(SoundEffects.dx, SoundCategory.WEATHER, loc1.getX(), loc1.getY(), loc1.getZ(), 1, 1f);
+                            PacketPlayOutNamedSoundEffect pponse = new PacketPlayOutNamedSoundEffect(SoundEffects.dK, SoundCategory.WEATHER, loc1.getX(), loc1.getY(), loc1.getZ(), 1, 1f);
                             for (Entity e2 : loc.getWorld().getNearbyEntities(loc, 64, 64, 64)) {
                                 if (e2 instanceof CraftPlayer) {
                                     ((CraftPlayer) e2).getHandle().playerConnection.sendPacket(pposew);
