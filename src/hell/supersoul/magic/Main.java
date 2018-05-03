@@ -16,6 +16,7 @@ import hell.supersoul.magic.core.regular.Blizzard;
 import hell.supersoul.magic.core.regular.Fire;
 import hell.supersoul.magic.events.EventProcesser;
 import hell.supersoul.magic.managers.ComboManager;
+import hell.supersoul.magic.util.InventoryPacketListener;
 
 public class Main extends JavaPlugin {
 	
@@ -24,6 +25,8 @@ public class Main extends JavaPlugin {
 	public void onEnable() {
 		
 		instance = this;
+		
+		new InventoryPacketListener();
 
 		Bukkit.getPluginManager().registerEvents(new EventProcesser(this), this);
 		Bukkit.getPluginManager().registerEvents(new hell.supersoul.magic.managers.EventListener(), this);
