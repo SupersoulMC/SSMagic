@@ -72,7 +72,7 @@ public class Blizzard extends RegularM {
                 Location l = caster.getLocation();
                 ParticleUtil.createAOEParticles(caster, d, 0.0, 204.0 / level, 255.0, 255.0, 1);
             }
-        }.runTaskTimer(plugin, 0, 2);
+        }.runTaskTimer(plugin, 0, 1);
         new BukkitRunnable() {
             @Override
             public void run() {

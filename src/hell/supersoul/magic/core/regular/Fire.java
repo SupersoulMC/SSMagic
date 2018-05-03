@@ -2,6 +2,8 @@ package hell.supersoul.magic.core.regular;
 
 import org.bukkit.Effect;
 import org.bukkit.Location;
+import org.bukkit.Particle;
+import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -36,7 +38,9 @@ public class Fire extends RegularM {
 					}
 					Vector vector2 = vector.multiply(i2 / 2.0).clone();
 					Location loc = start.clone().add(vector2.toLocation(caster.getWorld()));
-					caster.getWorld().spigot().playEffect(loc, Effect.FLAME, 0, 0, 0, 0, 0, 0, 16, 64);
+					World w = loc.getWorld();
+                    w.spawnParticle(Particle.FLAME, loc, 4, 0.0, 0.0, 0.0, 0.0);
+                    w.spawnParticle(Particle.SMOKE_NORMAL, loc, 16 * level, 0.1 * level, 0.1 * level, 0.1 * level, 0.05);
 					for(Entity e : loc.getWorld().getNearbyEntities(loc, 0.5, 0.5, 0.5)) {
 						if(e instanceof LivingEntity && !e.equals(caster)) {
 							for(Integer i2 = 0; i2 < 5; i2++) {
@@ -44,10 +48,10 @@ public class Fire extends RegularM {
 									@Override
 									public void run() {
 										if(e.isDead()) {
-											this.cancel();
+											return;
 										}
 										((LivingEntity) e).damage(level);
-										e.getWorld().spigot().playEffect(e.getLocation().add(0.0, 1.0, 0.0), Effect.FLAME, 0, 0, 0.5f, 0.5f, 0.5f, 0f, 16, 64);
+										w.spawnParticle(Particle.FLAME, e.getLocation().add(0.0, 1.0, 0.0), 4, 0.5, 0.5, 0.5, 0.0);
 									}
 								}.runTaskLater(Main.getInstance(), i2 * 20);
 							}
