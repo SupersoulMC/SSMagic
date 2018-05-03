@@ -51,11 +51,11 @@ public class Main extends JavaPlugin {
 			return false;
 		Player player = (Player) sender;
 		if(cmd.getName().equals("magictest")) {
-			
+			/*
 			RegularM magic = new Lightning(Integer.parseInt(args[0]));
 			magic.cast(player);
+			*/
 			
-			/*
 			ItemStack item = new ItemStack(Material.WOOD_SWORD);
 			ItemMeta meta = item.getItemMeta();
 			ArrayList<String> lore = new ArrayList<>();
@@ -64,7 +64,7 @@ public class Main extends JavaPlugin {
 			meta.setLore(lore);
 			item.setItemMeta(meta);
 			player.getInventory().addItem(item);
-			*/
+			
 		}
 		return false;	
 	}

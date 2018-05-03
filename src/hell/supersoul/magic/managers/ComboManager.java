@@ -1,6 +1,8 @@
 package hell.supersoul.magic.managers;
 
 import hell.supersoul.magic.Main;
+import hell.supersoul.magic.core.ComboM;
+import hell.supersoul.magic.core.MagicItem;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.apache.commons.lang3.StringUtils;
@@ -14,46 +16,67 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ComboManager {
-    enum HitLevel {
-        ZERO, ONE, TWO;
-    }
+	enum HitLevel {
+		ZERO, ONE, TWO;
+	}
 
-    static HashMap<Player, HitLevel> currentHit = new HashMap<>();
-    static HashMap<Player, Integer> currentHitTask = new HashMap<>();
+	static HashMap<Player, HitLevel> currentHit = new HashMap<>();
+	static HashMap<Player, Integer> currentHitTask = new HashMap<>();
+	static HashMap<Player, ArrayList<HitLevel>> comboCount = new HashMap<>();
 
-    // Make the combo bar, hit ticks measured in ticks
-    public static void executeHit(Player player) {
+	// Make the combo bar, hit ticks measured in ticks
+	public static void executeHit(Player player) {
+    	
+    	//Stops the previous hit.
         if (currentHitTask.containsKey(player))
             Bukkit.getScheduler().cancelTask(currentHitTask.get(player));
+        
+        //Safety checks.
         ArrayList<Integer> hitTicks = new ArrayList<>();
         if (player == null)
             return;
         if (!player.isOnline())
             return;
+        if (!comboCount.containsKey(player))
+        	comboCount.put(player, new ArrayList<>());
+        
+        //Gets item, with default air
         ItemStack item = player.getItemOnCursor();
         if (item == null || item.getType().equals(Material.AIR)) {
             hitTicks.add(10);
             hitTicks.add(6);
             hitTicks.add(4);
         }
-
-        int total = 0;
-        for (int i : hitTicks) {
-            total += i;
-        }
-        int t = total;
-
+        
+        //Sets prefix and suffix's colors.
         String l = "";
         if (!currentHit.containsKey(player))
             l = "7";
-        else if (currentHit.get(player).equals(HitLevel.ZERO))
-            l = "7";
-        else if (currentHit.get(player).equals(HitLevel.ONE))
-            l = "e";
-        else if (currentHit.get(player).equals(HitLevel.TWO))
-            l = "6";
+        else l = ComboManager.hitLevelToColorCode(currentHit.get(player)) + "";
+        
+        //Calculates the number of combos.
+        String comboBar = "";
+        MagicItem magicItem = LoreManager.getMagicItem(item);
+        if (item != null) {
+        	ComboM magic = EquipmentManager.getTheOnlyComboMagic(magicItem);
+        	if (magic != null) {
+        		comboBar = "¡±" + l + "¡±l[ ";
+        		int totalCombo = magic.getComboTotal();
+        		int currentCount = 0;
+        		if (comboCount.containsKey(player)) {
+        			currentCount = comboCount.get(player).size();
+        			for (HitLevel level : comboCount.get(player)) {
+        				comboBar = comboBar + "¡±" + ComboManager.hitLevelToColorCode(level) + "¡½";
+        			}
+        		}
+        		for (int i = 0; i < (totalCombo - currentCount) ; i++) {
+        			comboBar = comboBar + "¡±7¡½";
+        		}
+        		comboBar = comboBar + " ¡±" + l + "¡±l]";
+        	}
+        }
 
-        String pre = "¡±" + l + "¡±l> ";
+        String pre = comboBar + "¡±" + l + "¡±l> ";
         String bar = "";
         bar = bar + StringUtils.repeat("¡±8|", hitTicks.get(0));
         bar = bar + StringUtils.repeat("¡±e|", hitTicks.get(1));
@@ -91,6 +114,7 @@ public class ComboManager {
                 if (n > mid.length()) {
                     currentHitTask.remove(player);
                     currentHit.remove(player);
+                    comboCount.get(player).clear();;
                     player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(""));
                     this.cancel();
                 }
@@ -98,4 +122,14 @@ public class ComboManager {
         }.runTaskTimer(Main.getInstance(), 0, 1).getTaskId();
         currentHitTask.put(player, id);
     }
+
+	public static char hitLevelToColorCode(HitLevel hitLevel) {
+		if (hitLevel.equals(HitLevel.ZERO))
+			return '7';
+		else if (hitLevel.equals(HitLevel.ONE))
+			return 'e';
+		else if (hitLevel.equals(HitLevel.TWO))
+			return '6';
+		return '7';
+	}
 }

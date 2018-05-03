@@ -18,4 +18,16 @@ public abstract class ComboM extends Magic {
 
     public abstract boolean cast(Player caster);
 
+	public int getComboTotal() {
+		return comboTotal;
+	}
+
+	public void setComboTotal(int comboTotal) {
+		this.comboTotal = comboTotal;
+	}
+
+	public ArrayList<Integer> getComboHitTicks() {
+		return comboHitTicks;
+	}
+
 }
