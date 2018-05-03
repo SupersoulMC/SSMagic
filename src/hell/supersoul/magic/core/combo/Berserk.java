@@ -10,7 +10,7 @@ import hell.supersoul.magic.core.ComboM;
 
 public class Berserk extends ComboM {
 
-	public Berserk(Integer level) {
+	public Berserk(int level) {
 		super(level);
 		this.comboTotal = 5;
 		this.comboHitTicks.add(7);

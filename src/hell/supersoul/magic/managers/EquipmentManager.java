@@ -34,10 +34,14 @@ public class EquipmentManager {
 		return null;
 	}
 
-	//Checks and updates the equimentData of a player for an inventory slot.
 	public static void checkAndUpdate(Player player, int slot) {
+		checkAndUpdate(player, slot, null);
+	}
 
-		//Safety checks
+	// Checks and updates the equimentData of a player for an inventory slot.
+	public static void checkAndUpdate(Player player, int slot, ItemStack item) {
+
+		// Safety checks
 		if (player == null)
 			return;
 		if (!player.isOnline())
@@ -49,38 +53,42 @@ public class EquipmentManager {
 			currentItem.put(player, new HashMap<>());
 		}
 
-		//Gets a EquipmentSlot instance for the slot number.
+		// Gets a EquipmentSlot instance for the slot number.
 		EquipmentSlot eSlot = EquipmentManager.toEquipmentSlot(slot);
 		if (eSlot == null)
 			return;
 
-		//Checks if the item is the same as the last check, if same then no need to update.
-		ItemStack item = player.getInventory().getItem(slot);
+		// Checks if the item is the same as the last check, if same then no need to
+		// update.
+		if (item == null)
+			item = player.getInventory().getItem(slot);
 		ItemStack current = currentItem.get(player).get(eSlot);
 		if (item == current)
 			return;
 		else
 			currentItem.get(player).put(eSlot, item);
 
-		//Checks if the new item is air, then remove the MagicItem from the player's data.
+		// Checks if the new item is air, then remove the MagicItem from the player's
+		// data.
 		if (item == null || item.getType().equals(Material.AIR)) {
 			equipmentData.get(player).remove(eSlot);
 			return;
 		}
 
-		//Checks if the new item is a MagicItem, if no then remove the previous MagicItem from the player's data.
+		// Checks if the new item is a MagicItem, if no then remove the previous
+		// MagicItem from the player's data.
 		MagicItem magicItem = LoreManager.getMagicItem(item);
 		if (magicItem == null) {
 			equipmentData.get(player).remove(eSlot);
 			return;
 		}
-		
-		//Updates the equipment data of the player.
+
+		// Updates the equipment data of the player.
 		equipmentData.get(player).put(eSlot, magicItem);
 		player.sendMessage("updated " + magicItem.getMagics().get(0).getClass().getName());
-		
+
 	}
-	
+
 	public static boolean hasMagic(Player player, Magic magic, EquipmentSlot slot) {
 		if (player == null || magic == null)
 			return false;

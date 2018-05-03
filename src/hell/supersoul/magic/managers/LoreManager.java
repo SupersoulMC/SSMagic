@@ -98,7 +98,7 @@ public class LoreManager {
 				Magic magic = null;
 				try {
 					Class<?> clazz = Class.forName("hell.supersoul.magic.core." + magicType + "." + magicName);
-					Constructor<?> constructor = clazz.getConstructor(Integer.class);
+					Constructor<?> constructor = clazz.getConstructor(Integer.TYPE);
 					Object instance = constructor.newInstance(magicLevel);
 					magic = (Magic) instance;
 				} catch (NoSuchMethodException | ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException

@@ -1,6 +1,7 @@
 package hell.supersoul.magic.util;
 
 import org.bukkit.Bukkit;
+import org.bukkit.event.EventPriority;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
@@ -21,6 +22,8 @@ public class InventoryPacketListener extends PacketAdapter {
 	@Override
 	public void onPacketSending(PacketEvent event) {
 		// Item packets (id: 0x16)
+		if (event.isCancelled())
+			return;
 		if (event.getPacketType() == PacketType.Play.Server.SET_SLOT) {
 			event.getPlayer().sendMessage("FIRED");
 			int slot = event.getPacket().getIntegers().read(1) - 36;
