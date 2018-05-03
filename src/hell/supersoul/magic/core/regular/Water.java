@@ -15,9 +15,8 @@ import hell.supersoul.magic.util.Util;
 @SuppressWarnings("deprecation")
 public class Water extends RegularM {
 	
-	public Water(Main plugin, Integer level) {
-		super.plugin = plugin;
-		super.level = level;
+	public Water(int level) {
+		super(level);
 	}
 
 	@Override

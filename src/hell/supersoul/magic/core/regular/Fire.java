@@ -18,9 +18,8 @@ public class Fire extends RegularM {
 
 	public Boolean trigger = true;
 	
-	public Fire(Main plugin, Integer level) {
-		super.plugin = plugin;
-		super.level = level;
+	public Fire(int level) {
+		super(level);
 	}
 	
 	@Override
@@ -60,7 +59,7 @@ public class Fire extends RegularM {
 						}
 					}
 				}
-			}.runTaskLater(plugin, i);
+			}.runTaskLater(Main.getInstance(), i);
 		}
 		return false;
 	}

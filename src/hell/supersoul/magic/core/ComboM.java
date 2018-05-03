@@ -7,6 +7,9 @@ import org.bukkit.entity.Player;
 
 public abstract class ComboM extends Magic {
 	
+	public ComboM(int level) {
+		super(level);
+	}
 	protected ArrayList<Integer> comboHitTicks = new ArrayList<>();
 	protected int comboTotal;
 	public abstract boolean cast(Entity victim);

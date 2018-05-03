@@ -20,9 +20,8 @@ public class Lightning extends RegularM {
 	
 	public Boolean trigger = true;
 	
-	public Lightning(Main plugin, Integer level) {
-		super.plugin = plugin;
-		super.level = level;
+	public Lightning(int level) {
+		super(level);
 	}
 	
 	@Override
@@ -60,7 +59,7 @@ public class Lightning extends RegularM {
 						}
 					}
 				}
-			}.runTaskLater(plugin, i);
+			}.runTaskLater(Main.getInstance(), i);
 		}
 		return false;
 	}

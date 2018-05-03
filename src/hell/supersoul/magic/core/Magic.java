@@ -4,7 +4,10 @@ import hell.supersoul.magic.Main;
 
 public class Magic {
 
-	protected Main plugin;
 	protected Integer level = 0;
+	
+	public Magic(int level) {
+		this.level = level;
+	}
 
 }

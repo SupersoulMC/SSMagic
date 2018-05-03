@@ -1,5 +1,7 @@
 package hell.supersoul.magic.util;
 
+import org.bukkit.Bukkit;
+
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.ListenerPriority;
@@ -7,6 +9,7 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 
 import hell.supersoul.magic.Main;
+import hell.supersoul.magic.managers.EquipmentManager;
 
 public class InventoryPacketListener extends PacketAdapter {
 
@@ -20,6 +23,11 @@ public class InventoryPacketListener extends PacketAdapter {
 		// Item packets (id: 0x16)
 		if (event.getPacketType() == PacketType.Play.Server.SET_SLOT) {
 			event.getPlayer().sendMessage("FIRED");
+			int slot = event.getPacket().getIntegers().read(1) - 36;
+			if (slot != event.getPlayer().getInventory().getHeldItemSlot())
+				return;
+			event.getPlayer().sendMessage("The slot is " + slot);
+			EquipmentManager.checkAndUpdate(event.getPlayer(), slot);
 		}
 	}
 

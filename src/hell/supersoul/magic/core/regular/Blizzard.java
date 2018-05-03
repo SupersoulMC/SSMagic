@@ -34,9 +34,8 @@ public class Blizzard extends RegularM {
     World world;
     LinkedHashMap<Location, Material> changed = new LinkedHashMap<Location, Material>();
 
-	public Blizzard(Main plugin, Integer level) {
-        super.plugin = plugin;
-		super.level = level;
+	public Blizzard(int level) {
+		super(level);
 	}
 
 	@Override
@@ -57,7 +56,7 @@ public class Blizzard extends RegularM {
                     }
                 }
             }
-        }.runTaskTimer(plugin, 0, 1);
+        }.runTaskTimer(Main.getInstance(), 0, 1);
         //AOE particle effect task
         new BukkitRunnable() {
             @Override
@@ -72,7 +71,7 @@ public class Blizzard extends RegularM {
                 Location l = caster.getLocation();
                 ParticleUtil.createAOEParticles(caster, d, 0.0, 204.0 / level, 255.0, 255.0, 1);
             }
-        }.runTaskTimer(plugin, 0, 1);
+        }.runTaskTimer(Main.getInstance(), 0, 1);
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -106,7 +105,7 @@ public class Blizzard extends RegularM {
                     }
                 }
             }
-        }.runTaskTimer(plugin, 0, 1);
+        }.runTaskTimer(Main.getInstance(), 0, 1);
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -128,7 +127,7 @@ public class Blizzard extends RegularM {
                     horiginal += 18;
                 }
             }
-        }.runTaskTimer(plugin, 0, 1);
+        }.runTaskTimer(Main.getInstance(), 0, 1);
 		return false;
 	}
 
