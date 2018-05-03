@@ -31,21 +31,21 @@ public class Blizzard extends RegularM {
     World world;
     LinkedHashMap<Location, Material> changed = new LinkedHashMap<Location, Material>();
 
-	public Blizzard(int level) {
-		super(level);
-	}
+    public Blizzard(int level) {
+        super(level);
+    }
 
-	@Override
-	public boolean cast(Player caster) {
+    @Override
+    public boolean cast(Player caster) {
         new BukkitRunnable() {
             @Override
             public void run() {
                 time++;
-                if(time == level * 3 * 20) {
+                if (time == level * 3 * 20) {
                     end = true;
                     this.cancel();
-                    for(Entry<Location, Material> e2 : changed.entrySet()) {
-                        for(Player p : Bukkit.getOnlinePlayers()) {
+                    for (Entry<Location, Material> e2 : changed.entrySet()) {
+                        for (Player p : Bukkit.getOnlinePlayers()) {
                             p.sendBlockChange(e2.getKey(), e2.getValue().getId(), (byte) 0);
                         }
                         e2.getKey().getBlock().getWorld().spigot().playEffect(e2.getKey(), Effect.TILE_BREAK, 174, 0, 0.5f, 0.5f, 0.5f, 0f, 1, 64);
@@ -58,11 +58,11 @@ public class Blizzard extends RegularM {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if(end) {
+                if (end) {
                     this.cancel();
                 }
                 Double d = level * 2.0;
-                if(end) {
+                if (end) {
                     return;
                 }
                 Location l = caster.getLocation();
@@ -85,18 +85,18 @@ public class Blizzard extends RegularM {
                     }
                 }
                 affected = newaffected;
-                for(Entity e : affected) {
+                for (Entity e : affected) {
                     ((LivingEntity) e).removePotionEffect(PotionEffectType.SLOW);
                     ((LivingEntity) e).removePotionEffect(PotionEffectType.JUMP);
                     ((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, level * 3 * 20, level));
                     ((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.JUMP, level * 3 * 20, -5));
                     Block b = e.getLocation().getBlock().getRelative(BlockFace.DOWN);
                     e.getWorld().spigot().playEffect(e.getLocation().add(0.0, 1.0, 0.0), Effect.FIREWORKS_SPARK, 0, 0, 0.5f, 0.5f, 0.5f, 0f, 1, 64);
-                    if(!(b.getType() == Material.AIR) && !(b instanceof InventoryHolder)) {
-                        if(!changed.containsKey(b.getLocation())) {
+                    if (!(b.getType() == Material.AIR) && !(b instanceof InventoryHolder)) {
+                        if (!changed.containsKey(b.getLocation())) {
                             changed.put(b.getLocation(), b.getType());
                         }
-                        for(Player p : Bukkit.getOnlinePlayers()) {
+                        for (Player p : Bukkit.getOnlinePlayers()) {
                             p.sendBlockChange(b.getLocation(), Material.PACKED_ICE.getId(), (byte) 0);
                         }
                     }
@@ -106,11 +106,11 @@ public class Blizzard extends RegularM {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if(end) {
+                if (end) {
                     this.cancel();
                 }
-                for(Entity e : affected) {
-                    if(end) {
+                for (Entity e : affected) {
+                    if (end) {
                         this.cancel();
                         return;
                     }
@@ -118,14 +118,14 @@ public class Blizzard extends RegularM {
                     ParticleUtil.createHelixParticles(l.getWorld(), l.getX(), hyoriginal + l.getY(), l.getZ(), d, horiginal, 204.0 / level, 255.0, 255.0, 4);
                     ParticleUtil.createHelixParticles(l.getWorld(), l.getX(), hyoriginal + l.getY(), l.getZ(), d, horiginal + 180, 204.0 / level, 255.0, 255.0, 4);
                     hyoriginal += 0.1;
-                    if(hyoriginal > 2.0) {
+                    if (hyoriginal > 2.0) {
                         hyoriginal = 0.0;
                     }
                     horiginal += 18;
                 }
             }
         }.runTaskTimer(Main.getInstance(), 0, 1);
-		return false;
-	}
+        return false;
+    }
 
 }

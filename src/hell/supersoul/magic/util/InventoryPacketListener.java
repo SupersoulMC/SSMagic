@@ -10,22 +10,22 @@ import hell.supersoul.magic.managers.EquipmentManager;
 
 public class InventoryPacketListener extends PacketAdapter {
 
-	public InventoryPacketListener() {
-		super(Main.getInstance(), ListenerPriority.NORMAL, PacketType.Play.Server.SET_SLOT);
-		ProtocolLibrary.getProtocolManager().addPacketListener(this);
-	}
+    public InventoryPacketListener() {
+        super(Main.getInstance(), ListenerPriority.NORMAL, PacketType.Play.Server.SET_SLOT);
+        ProtocolLibrary.getProtocolManager().addPacketListener(this);
+    }
 
-	@Override
-	public void onPacketSending(PacketEvent event) {
-		// Item packets (id: 0x16)
-		if (event.isCancelled())
-			return;
-		if (event.getPacketType() == PacketType.Play.Server.SET_SLOT) {
-			int slot = event.getPacket().getIntegers().read(1) - 36;
-			if (slot != event.getPlayer().getInventory().getHeldItemSlot())
-				return;
-			EquipmentManager.checkAndUpdate(event.getPlayer(), slot);
-		}
-	}
+    @Override
+    public void onPacketSending(PacketEvent event) {
+        // Item packets (id: 0x16)
+        if (event.isCancelled())
+            return;
+        if (event.getPacketType() == PacketType.Play.Server.SET_SLOT) {
+            int slot = event.getPacket().getIntegers().read(1) - 36;
+            if (slot != event.getPlayer().getInventory().getHeldItemSlot())
+                return;
+            EquipmentManager.checkAndUpdate(event.getPlayer(), slot);
+        }
+    }
 
 }
