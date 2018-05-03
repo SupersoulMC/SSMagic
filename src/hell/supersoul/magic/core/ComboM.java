@@ -1,9 +1,9 @@
 package hell.supersoul.magic.core;
 
-import java.util.ArrayList;
-
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
 
 public abstract class ComboM extends Magic {
 	

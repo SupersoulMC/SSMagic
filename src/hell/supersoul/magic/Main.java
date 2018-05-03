@@ -1,7 +1,8 @@
 package hell.supersoul.magic;
 
-import java.util.ArrayList;
-
+import com.comphenix.protocol.ProtocolLibrary;
+import hell.supersoul.magic.events.EventProcesser;
+import hell.supersoul.magic.util.InventoryPacketListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -11,15 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.events.PacketListener;
-
-import hell.supersoul.magic.core.RegularM;
-import hell.supersoul.magic.core.regular.Blizzard;
-import hell.supersoul.magic.core.regular.Fire;
-import hell.supersoul.magic.events.EventProcesser;
-import hell.supersoul.magic.managers.ComboManager;
-import hell.supersoul.magic.util.InventoryPacketListener;
+import java.util.ArrayList;
 
 public class Main extends JavaPlugin {
 	

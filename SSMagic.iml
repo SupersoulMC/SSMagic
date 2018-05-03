@@ -10,11 +10,20 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/spigot-1.11.2-R0.1-SNAPSHOT.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../COP 2.0/Dependencies/ProtocolLib.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/Adrian/COP 2.0/BuildTools/spigot-1.12.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/Downloads/spigot-1.11.2-R0.1-SNAPSHOT.jar!/" />
+          <root url="jar://C:/Adrian/COP 2.0/BuildTools/spigot-1.12.2.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>

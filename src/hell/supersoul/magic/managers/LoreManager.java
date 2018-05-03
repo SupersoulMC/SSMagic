@@ -1,19 +1,17 @@
 package hell.supersoul.magic.managers;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
 import hell.supersoul.magic.core.Magic;
 import hell.supersoul.magic.core.MagicItem;
 import hell.supersoul.magic.core.MagicItem.MagicItemType;
 import hell.supersoul.magic.util.Util;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class LoreManager {
 	

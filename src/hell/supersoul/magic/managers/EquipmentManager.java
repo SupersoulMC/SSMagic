@@ -1,14 +1,12 @@
 package hell.supersoul.magic.managers;
 
-import java.util.HashMap;
-
-import org.bukkit.Bukkit;
+import hell.supersoul.magic.core.Magic;
+import hell.supersoul.magic.core.MagicItem;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import hell.supersoul.magic.core.Magic;
-import hell.supersoul.magic.core.MagicItem;
+import java.util.HashMap;
 
 public class EquipmentManager {
 
