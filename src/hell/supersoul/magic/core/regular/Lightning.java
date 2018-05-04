@@ -91,6 +91,7 @@ public class Lightning extends RegularM {
                     Double castTime = Math.round(5 * Math.pow(0.9, level) * 20) * 1.0;
                     Double distanceFromPlayer = (castTime - time) / castTime * 255.0;
                     for(Integer i = 0; i < 10; i++) {
+                        world.spawnParticle(Particle.REDSTONE, loc.getX(), loc.getY() + 2.0 + distanceFromPlayer + 1.1 , loc.getZ(), 0, 1, 1, 0.0);
                         world.spawnParticle(Particle.REDSTONE, loc.getX(), loc.getY() + 2.0 + distanceFromPlayer , loc.getZ(), 0, 1, 1, 0.0);
                     }
                     for(Integer i = 0; i < 2; i++) {

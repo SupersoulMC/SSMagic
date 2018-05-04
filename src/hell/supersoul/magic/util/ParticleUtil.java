@@ -45,7 +45,7 @@ public class ParticleUtil {
             double h1x = loc.getX() + Math.sin(Math.toRadians(r1 + rincrement));
             double h1z = loc.getZ() +  Math.cos(Math.toRadians(r1 + rincrement));
             for (int i = 0; i < count; i++) {
-                w.spawnParticle(Particle.CRIT_MAGIC, h1x, y, h1z, 1);
+                w.spawnParticle(Particle.CRIT_MAGIC, h1x, y, h1z, 1, 0.0, 0.0, 0.0, 0.0);
             }
             r1 += rincrement;
         }
