@@ -9,6 +9,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -26,7 +27,7 @@ public class ComboManager {
 	static HashMap<Player, ArrayList<HitLevel>> comboCount = new HashMap<>();
 
 	// Make the combo bar, hit ticks measured in ticks
-	public static void executeHit(Player player) {
+	public static void executeHit(Player player, Entity target) {
 
 		// Safety checks.
 		ArrayList<Integer> hitTicks = new ArrayList<>();
@@ -82,6 +83,7 @@ public class ComboManager {
 					combo = true;
 					currentHit.remove(player);
 					l = "b";
+					magic.unleashCombo(player, target, 0);
 				} else {
 					player.sendMessage("Hit");
 					bar = bar + StringUtils.repeat("¡±8|", hitTicks.get(0));
@@ -89,6 +91,10 @@ public class ComboManager {
 					bar = bar + StringUtils.repeat("¡±6|", hitTicks.get(2));
 					bar = bar + StringUtils.repeat("¡±8|", hitTicks.get(3));
 					combo = false;
+					if (currentHit.containsKey(player))
+					magic.normalHit(player, target, currentHit.get(player));
+					else
+						magic.normalHit(player, target, HitLevel.ONE);
 				}
 				comboBar = "¡±" + l + "¡±l[ ";
 				if (currentCount > 0)
