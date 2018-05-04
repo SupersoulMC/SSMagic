@@ -60,7 +60,8 @@ public class Lightning extends RegularM {
                                 ((CraftPlayer) e2).getHandle().playerConnection.sendPacket(pposew);
                                 ((CraftPlayer) e2).getHandle().playerConnection.sendPacket(pponse);
                             }
-                        }for (Entity e2 : loc.getWorld().getNearbyEntities(loc, 0.5, 0.5, 0.5)) {
+                        }
+                        for (Entity e2 : loc.getWorld().getNearbyEntities(loc, 0.5, 0.5, 0.5)) {
                             if (e2 instanceof LivingEntity) {
                                 ((LivingEntity) e2).damage(3 * level);
                             }
@@ -80,7 +81,7 @@ public class Lightning extends RegularM {
                 Double d = 5 * Math.pow(1.5, level);
                 ParticleUtil.createAOEParticles(caster, d, 0.0, 255.0, 255.0, 0.0, 1);
             }
-        }.runTaskTimer(Main.getInstance(), 0, 1);
+        }.runTaskTimer(Main.getInstance(), 0, 5);
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -94,7 +95,7 @@ public class Lightning extends RegularM {
                         world.spawnParticle(Particle.REDSTONE, loc.getX(), loc.getY() + 2.0 + distanceFromPlayer + 1.1 , loc.getZ(), 0, 1, 1, 0.0);
                         world.spawnParticle(Particle.REDSTONE, loc.getX(), loc.getY() + 2.0 + distanceFromPlayer , loc.getZ(), 0, 1, 1, 0.0);
                     }
-                    for(Integer i = 0; i < 2; i++) {
+                    for(Integer i = 0; i < 1; i++) {
                         world.spawnParticle(Particle.REDSTONE, loc.getX(), loc.getY(), loc.getZ(), 0, (120.0 + 135.0 * (castTime - time) / castTime) / 255.0 , 0.0, 21/255.0);
                         world.spawnParticle(Particle.REDSTONE, loc.getX() + 0.5, loc.getY(), loc.getZ() + 0.5, 0, (120.0 + 135.0 * (castTime - time) / castTime) / 255.0 , 0.0, 21/255.0);
                         world.spawnParticle(Particle.REDSTONE, loc.getX() + 0.5, loc.getY(), loc.getZ() - 0.5, 0, (120.0 + 135.0 * (castTime - time) / castTime) / 255.0 , 0.0, 21/255.0);
@@ -103,7 +104,7 @@ public class Lightning extends RegularM {
                     }
                 }
             }
-        }.runTaskTimer(Main.getInstance(), 0, 1);
+        }.runTaskTimer(Main.getInstance(), 0, 5);
         return false;
     }
 

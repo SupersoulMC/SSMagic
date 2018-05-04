@@ -43,24 +43,31 @@ public class Berserk extends ComboM {
 	@Override
 	public void normalHit(Player caster, Entity hitTarget, HitLevel level) {
         Location loc = caster.getLocation();
-        Double point1Y = Util.randomDouble(0.0, 2.0) + loc.getY();
-        Double point2Y = Util.randomDouble(0.0, 2.0) + loc.getY();
         List<Double> points = getRandomPointRotation(loc);
-        ParticleUtil.createArcParticles(caster.getWorld(), caster.getLocation(), point1Y, point2Y, points.get(0) + loc.getYaw(), points.get(1) + loc.getYaw(), 0.05, 10);
-		return;
+        Float yaw = loc.getYaw() + 360;
+        ParticleUtil.createArcParticles(caster.getWorld(), caster.getLocation(), points.get(0), points.get(1), points.get(2) + yaw, points.get(3) +  yaw, 0.05, 10,
+                caster.getLocation().distance(hitTarget.getLocation()) - 0.2);
 	}
 
 	public List<Double> getRandomPointRotation(Location loc) {
         Boolean randomPoint = new Random().nextBoolean();
         List<Double> points = new ArrayList<>();
         if(randomPoint) {
+            Double point1Y = Util.randomDouble(1.0, 2.0) + loc.getY();
+            Double point2Y = Util.randomDouble(0.0, 1.0) + loc.getY();
             Double point1R = Util.randomDouble(-35.0, -25.0);
             Double point2R = Util.randomDouble(25.0, 35.0);
+            points.add(point1Y);
+            points.add(point2Y);
             points.add(point1R);
             points.add(point2R);
         } else {
+            Double point1Y = Util.randomDouble(0.0, 1.0) + loc.getY();
+            Double point2Y = Util.randomDouble(1.0, 2.0) + loc.getY();
             Double point1R = Util.randomDouble(25.0, 35.0);
             Double point2R = Util.randomDouble(-35.0, -25.0);
+            points.add(point1Y);
+            points.add(point2Y);
             points.add(point1R);
             points.add(point2R);
         }
