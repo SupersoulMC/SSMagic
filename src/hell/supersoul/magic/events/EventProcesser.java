@@ -47,31 +47,6 @@ public class EventProcesser extends Event implements Listener {
     }
 
     @EventHandler
-    public void hit(EntityDamageByEntityEvent e) {
-        if (e.getDamager() instanceof Player) {
-            Player p = (Player) e.getDamager();
-            Date now = new Date();
-            if (lasthit.get(p.getName()) == null) {
-                lasthit.put(p.getName(), now.getTime());
-            } else {
-                lasthit.put(p.getName(), now.getTime());
-                if ((now.getTime() - lasthit.get(p.getName())) <= 2000) {
-                    //COMBO COUNT
-                    if (counthit.containsKey(p.getName())) {
-                        if(counthit.get(p.getName()) == 5) {
-                            counthit.put(p.getName(), 0);
-                            Berserk berserk = new Berserk(5);
-                            berserk.cast(e.getEntity());
-                        }
-                    } else {
-                        counthit.put(p.getName(), counthit.get(p.getName()));
-                    }
-                }
-            }
-        }
-    }
-
-    @EventHandler
     public void onMove(PlayerMoveEvent e) {
         if(freezed.containsKey(e.getPlayer().getName()) && freezed.get(e.getPlayer().getName())) {
             if(e.getTo().getX() != e.getFrom().getX() || e.getTo().getY() != e.getFrom().getY() || e.getTo().getZ() != e.getFrom().getZ()) {

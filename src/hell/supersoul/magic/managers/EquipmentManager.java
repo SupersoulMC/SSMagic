@@ -1,5 +1,6 @@
 package hell.supersoul.magic.managers;
 
+import hell.supersoul.magic.core.ComboM;
 import hell.supersoul.magic.core.Magic;
 import hell.supersoul.magic.core.MagicItem;
 import org.bukkit.Material;
@@ -61,11 +62,15 @@ public class EquipmentManager {
         if (item == null)
             item = player.getInventory().getItem(slot);
         ItemStack current = currentItem.get(player).get(eSlot);
-        if (item == current)
+        if (item == current) {
+        	player.sendMessage("same");
             return;
-        else
+        }
+        else {
             currentItem.get(player).put(eSlot, item);
-
+            player.sendMessage("replace");
+        }
+        
         // Checks if the new item is air, then remove the MagicItem from the player's
         // data.
         if (item == null || item.getType().equals(Material.AIR)) {
@@ -104,5 +109,33 @@ public class EquipmentManager {
             }
             return false;
         }
+    }
+    
+    //Gets the Magic Item instance for a player for a equipment slot.
+    public static MagicItem getMagicItem(Player player, EquipmentSlot slot) {
+    	if (player == null)
+    		return null;
+    	if (slot == null)
+    		return null;
+    	if (!equipmentData.containsKey(player))
+    		return null;
+    	return equipmentData.get(player).get(slot);
+    }
+    
+    //Under normal circumstances, there is only one combo magic for one magic item, return null if more than one.
+    public static ComboM getTheOnlyComboMagic(MagicItem item) {
+    	if (item == null)
+    		return null;
+    	int n = 0;
+    	Magic result = null;
+    	for (Magic magic : item.getMagics()) {
+    		if (magic instanceof ComboM) {
+    			n++;
+    			result = magic;
+    		}
+    	}
+    	if (n > 1)
+    		return null;
+    	return (ComboM) result;
     }
 }

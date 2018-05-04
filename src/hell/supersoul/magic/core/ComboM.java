@@ -3,6 +3,8 @@ package hell.supersoul.magic.core;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
+import hell.supersoul.magic.managers.ComboManager.HitLevel;
+
 import java.util.ArrayList;
 
 public abstract class ComboM extends Magic {
@@ -14,8 +16,20 @@ public abstract class ComboM extends Magic {
     protected ArrayList<Integer> comboHitTicks = new ArrayList<>();
     protected int comboTotal;
 
-    public abstract boolean cast(Entity victim);
+    public abstract void unleashCombo(Player caster, Entity hitTarget, double completePct);
+    
+    public abstract void normalHit(Player caster, Entity hitTarget, HitLevel level);
 
-    public abstract boolean cast(Player caster);
+	public int getComboTotal() {
+		return comboTotal;
+	}
+
+	public void setComboTotal(int comboTotal) {
+		this.comboTotal = comboTotal;
+	}
+
+	public ArrayList<Integer> getComboHitTicks() {
+		return comboHitTicks;
+	}
 
 }
