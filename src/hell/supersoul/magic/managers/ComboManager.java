@@ -8,6 +8,7 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -76,36 +77,32 @@ public class ComboManager {
 				}
 				if (totalCombo == currentCount) {
 					player.sendMessage("Combo");
-					bar = bar + StringUtils.repeat("¡±b|", hitTicks.get(0));
-					bar = bar + StringUtils.repeat("¡±b|", hitTicks.get(1));
-					bar = bar + StringUtils.repeat("¡±b|", hitTicks.get(2));
-					bar = bar + StringUtils.repeat("¡±6|", hitTicks.get(3));
 					combo = true;
 					currentHit.remove(player);
 					l = "b";
 					magic.unleashCombo(player, target, 0);
 				} else {
 					player.sendMessage("Hit");
-					bar = bar + StringUtils.repeat("¡±8|", hitTicks.get(0));
-					bar = bar + StringUtils.repeat("¡±e|", hitTicks.get(1));
-					bar = bar + StringUtils.repeat("¡±6|", hitTicks.get(2));
-					bar = bar + StringUtils.repeat("¡±8|", hitTicks.get(3));
+					bar = bar + StringUtils.repeat(ChatColor.DARK_GRAY + "|", hitTicks.get(0));
+					bar = bar + StringUtils.repeat(ChatColor.YELLOW + "|", hitTicks.get(1));
+					bar = bar + StringUtils.repeat(ChatColor.GOLD + "|", hitTicks.get(2));
+					bar = bar + StringUtils.repeat(ChatColor.DARK_GRAY + "|", hitTicks.get(3));
 					combo = false;
 					if (currentHit.containsKey(player))
 					magic.normalHit(player, target, currentHit.get(player));
 					else
 						magic.normalHit(player, target, HitLevel.ONE);
 				}
-				comboBar = "¡±" + l + "¡±l[ ";
+				comboBar = ChatColor.COLOR_CHAR + l + ChatColor.BOLD + "[ ";
 				if (currentCount > 0)
 					for (HitLevel level : comboCount.get(player)) {
-						comboBar = comboBar + "¡±" + ComboManager.hitLevelToColorCode(level) + "¡½";
+						comboBar = comboBar + ChatColor.COLOR_CHAR + ComboManager.hitLevelToColorCode(level) + "¡½";
 					}
 
 				for (int i = 0; i < (totalCombo - currentCount); i++) {
-					comboBar = comboBar + "¡±8¡½";
+					comboBar = comboBar + ChatColor.DARK_GRAY + "¡½";
 				}
-				comboBar = comboBar + " ¡±" + l + "¡±l]     ";
+				comboBar = comboBar + " " + ChatColor.COLOR_CHAR + l + ChatColor.BOLD + "]     ";
 			}
 		} else {
 			hitTicks.add(10);
@@ -114,8 +111,8 @@ public class ComboManager {
 		}
 
 		// Composes the combo bar.
-		String pre = comboBar + "¡±" + l + "¡±l> ";
-		String suf = " ¡±" + l + "¡±l<";
+		String pre = comboBar + ChatColor.COLOR_CHAR + l + ChatColor.BOLD + "> ";
+		String suf = " " + ChatColor.COLOR_CHAR + l + ChatColor.BOLD + "<";
 		String mid = bar;
 
 		boolean c = combo;
@@ -132,7 +129,7 @@ public class ComboManager {
 					String comp = pre;
 					if (n > 0)
 						comp = comp + mid.substring(0, n);
-					comp = comp + "¡±c|";
+					comp = comp + ChatColor.RED + "|";
 					if (n + 3 <= mid.length())
 						comp = comp + mid.substring(n + 3);
 					else
@@ -153,7 +150,7 @@ public class ComboManager {
 				} else {
 					// Composes the bar for the combo
 					String comp = pre;
-					comp = comp + StringUtils.repeat("¡±b|", (mid.length() - n) / 3) + StringUtils.repeat("¡±8|", count);
+					comp = comp + StringUtils.repeat(ChatColor.AQUA + "|", (mid.length() - n) / 3) + StringUtils.repeat(ChatColor.DARK_GRAY + "|", count);
 					comp = comp + suf;
 					player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(comp));
 				}
