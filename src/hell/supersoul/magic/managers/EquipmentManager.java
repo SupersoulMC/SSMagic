@@ -161,6 +161,9 @@ public class EquipmentManager {
     	if (!item.getShortcuts().containsKey(type))
     		return;
     	
+    	if (!canUnleashMagic(player))
+    		return;
+    	
     	//The magic type must be regular
     	Magic magic = item.getMagics().get(item.getShortcuts().get(type));
     	if (!(magic instanceof RegularM))
@@ -176,5 +179,14 @@ public class EquipmentManager {
     	
     	((RegularM) magic).cast(player);
     	
+    }
+    
+    //Checks if the player can unleash a magic
+    public static boolean canUnleashMagic(Player player) {
+    	if (ComboManager.getCurrentHitTask().containsKey(player))
+    		return false;
+    	if (!player.isOnGround())
+    		return false;
+    	return true;
     }
 }

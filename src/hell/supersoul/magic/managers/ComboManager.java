@@ -188,4 +188,16 @@ public class ComboManager {
 			return '6';
 		return '7';
 	}
+
+	public static HashMap<Player, HitLevel> getCurrentHit() {
+		return currentHit;
+	}
+
+	public static HashMap<Player, Integer> getCurrentHitTask() {
+		return currentHitTask;
+	}
+
+	public static HashMap<Player, ArrayList<HitLevel>> getComboCount() {
+		return comboCount;
+	}
 }
