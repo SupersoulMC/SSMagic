@@ -62,11 +62,15 @@ public class EquipmentManager {
         if (item == null)
             item = player.getInventory().getItem(slot);
         ItemStack current = currentItem.get(player).get(eSlot);
-        if (item == current)
+        if (item == current) {
+        	player.sendMessage("same");
             return;
-        else
+        }
+        else {
             currentItem.get(player).put(eSlot, item);
-
+            player.sendMessage("replace");
+        }
+        
         // Checks if the new item is air, then remove the MagicItem from the player's
         // data.
         if (item == null || item.getType().equals(Material.AIR)) {

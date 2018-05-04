@@ -10,6 +10,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 
 public class EventListener implements Listener {
@@ -66,6 +67,11 @@ public class EventListener implements Listener {
                 continue;
             EquipmentManager.checkAndUpdate(player, slot, event.getOldCursor());
         }
+    }
+    
+    @EventHandler
+    public void onItemDamage(PlayerItemDamageEvent event) {
+    	event.setCancelled(true);
     }
 
 }
