@@ -39,8 +39,8 @@ public class EventProcesser extends Event implements Listener {
 
     @EventHandler
     public void cast(PlayerInteractEvent e) {
-        if (e.getPlayer().getItemInHand() != null && e.getPlayer().getItemInHand().hasItemMeta() && e.getPlayer().getItemInHand().getItemMeta().hasDisplayName() && e.getPlayer().getItemInHand().getItemMeta().getDisplayName().contains("Wand")) {
-            String itemname = e.getItem().getItemMeta().getDisplayName();
+        if (e.getPlayer().getInventory().getItemInMainHand().getItemMeta() != null && e.getPlayer().getInventory().getItemInMainHand().hasItemMeta() && e.getPlayer().getInventory().getItemInMainHand().getItemMeta().hasDisplayName() && e.getPlayer().getInventory().getItemInMainHand().getItemMeta().getDisplayName().contains("Wand")) {
+            String itemname = e.getPlayer().getInventory().getItemInMainHand().getItemMeta().getDisplayName();
             RegularMEnum.valueOf(itemname.split(" ")[1]).get(Integer.parseInt(itemname.split(" ")[2])).cast(e.getPlayer());
             e.setCancelled(true);
         }
