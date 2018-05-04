@@ -81,6 +81,10 @@ public class ComboManager {
 					currentHit.remove(player);
 					l = "b";
 					magic.unleashCombo(player, target, 0);
+					bar = bar + StringUtils.repeat(ChatColor.BLUE + "|", hitTicks.get(0));
+					bar = bar + StringUtils.repeat(ChatColor.BLUE + "|", hitTicks.get(1));
+					bar = bar + StringUtils.repeat(ChatColor.BLUE + "|", hitTicks.get(2));
+					bar = bar + StringUtils.repeat(ChatColor.BLUE + "|", hitTicks.get(3));
 				} else {
 					player.sendMessage("Hit");
 					bar = bar + StringUtils.repeat(ChatColor.DARK_GRAY + "|", hitTicks.get(0));
