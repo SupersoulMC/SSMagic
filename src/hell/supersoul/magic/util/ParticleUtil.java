@@ -34,6 +34,23 @@ public class ParticleUtil {
         }
     }
 
+
+    public static void createArcParticles(World w, Location loc, double y1, double y2, double r1, double r2, double increment, int count) {
+        Integer increases = 0;
+        for(double y = y1; y <= y2; y += increment) {
+            increases++;
+        }
+        Double rincrement = (r2 - r1) / increases;
+        for(double y = y1; y <= y2; y += increment) {
+            double h1x = loc.getX() + Math.sin(Math.toRadians(r1 + rincrement));
+            double h1z = loc.getZ() +  Math.cos(Math.toRadians(r1 + rincrement));
+            for (int i = 0; i < count; i++) {
+                w.spawnParticle(Particle.CRIT_MAGIC, h1x, y, h1z, 1);
+            }
+            r1 += rincrement;
+        }
+    }
+
     public void createDefenseParticles(Player p, double radius, double angle, double red, double green, double blue) {
         // Hell asked me to make this, not sure what the use is for so I place it here for now
         // Default values are: red: 0, green: 127, blue: 255, radius: 1, angle: 90
