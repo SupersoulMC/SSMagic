@@ -28,7 +28,7 @@ public class EventListener implements Listener {
         if (!ent.getType().equals(EntityType.PLAYER))
             return;
         Player player = (Player) ent;
-        ComboManager.executeHit(player);
+        ComboManager.executeHit(player, event.getEntity());
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)

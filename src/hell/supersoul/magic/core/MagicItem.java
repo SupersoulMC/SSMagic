@@ -12,6 +12,10 @@ public class MagicItem {
     public enum MagicType {
         REGULAR, COMBO, LOCKED
     }
+    
+    public enum ShortcutType {
+    	LEFT_CLICK, RIGHT_CLICK, SHIFT_LEFT_CLICK, SHIFT_RIGHT_CLICK;
+    }
 
     ArrayList<Magic> magics = new ArrayList<>();
     HashMap<Magic, Integer> magicEXP = new HashMap<>();
