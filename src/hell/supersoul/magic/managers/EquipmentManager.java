@@ -3,6 +3,10 @@ package hell.supersoul.magic.managers;
 import hell.supersoul.magic.core.ComboM;
 import hell.supersoul.magic.core.Magic;
 import hell.supersoul.magic.core.MagicItem;
+import hell.supersoul.magic.core.MagicItem.MagicItemType;
+import hell.supersoul.magic.core.MagicItem.ShortcutType;
+import hell.supersoul.magic.core.RegularM;
+
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -137,5 +141,40 @@ public class EquipmentManager {
     	if (n > 1)
     		return null;
     	return (ComboM) result;
+    }
+    
+    //Triggers the shortcut of the magic item.
+    public static void triggerShortcut(Player player, ShortcutType type) {
+    	
+    	//Safety checks
+    	if (player == null)
+    		return;
+    	if (type == null)
+    		return;
+    	if (!equipmentData.containsKey(player))
+    		return;
+    	MagicItem item = equipmentData.get(player).get(EquipmentSlot.HAND);
+    	if (item == null)
+    		return;
+    	if (item.getShortcuts().size() < 0)
+    		return;
+    	if (!item.getShortcuts().containsKey(type))
+    		return;
+    	
+    	//The magic type must be regular
+    	Magic magic = item.getMagics().get(item.getShortcuts().get(type));
+    	if (!(magic instanceof RegularM))
+    		return;
+    	
+    	//You cannot left click a weapon as shortcut
+    	if (item.getItemType().equals(MagicItemType.TOOL) && type.equals(ShortcutType.LEFT_CLICK))
+    		return;
+    	
+    	//You cannot right click book as shortcut
+    	if (item.getItemType().equals(MagicItemType.BOOK) && type.equals(ShortcutType.RIGHT_CLICK))
+    		return;
+    	
+    	((RegularM) magic).cast(player);
+    	
     }
 }
