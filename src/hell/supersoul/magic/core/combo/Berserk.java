@@ -8,6 +8,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
 
 public class Berserk extends ComboM {
 
@@ -31,7 +32,12 @@ public class Berserk extends ComboM {
 
 	@Override
 	public void normalHit(Player caster, Entity hitTarget, HitLevel level) {
-		// TODO Auto-generated method stub
+		for(Entity e : caster.getNearbyEntities(2.0, 2.0, 2.0)) {
+		    Vector vector = e.getLocation().toVector().subtract(caster.getLocation().toVector()).normalize();
+		    vector.multiply(0.5);
+		    vector.setY(0.5);
+		    e.setVelocity(vector);
+        }
 		return;
 	}
 
