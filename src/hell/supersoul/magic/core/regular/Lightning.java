@@ -55,10 +55,14 @@ public class Lightning extends RegularM {
                         EntityLightning e = new EntityLightning(((CraftWorld) Bukkit.getWorld(caster.getWorld().getName())).getHandle(), loc.getX(), loc.getY(), loc.getZ(), true);
                         PacketPlayOutSpawnEntityWeather pposew = new PacketPlayOutSpawnEntityWeather(e);
                         PacketPlayOutNamedSoundEffect pponse = new PacketPlayOutNamedSoundEffect(SoundEffects.dK, SoundCategory.WEATHER, loc.getX(), loc.getY(), loc.getZ(), 1, 1f);
-                        for (Entity e2 : loc.getWorld().getNearbyEntities(loc, 64, 64, 64)) {
+                        for (Entity e2 : loc.getWorld().getNearbyEntities(loc, 32, 32, 32)) {
                             if (e2 instanceof CraftPlayer) {
                                 ((CraftPlayer) e2).getHandle().playerConnection.sendPacket(pposew);
                                 ((CraftPlayer) e2).getHandle().playerConnection.sendPacket(pponse);
+                            }
+                        }for (Entity e2 : loc.getWorld().getNearbyEntities(loc, 0.5, 0.5, 0.5)) {
+                            if (e2 instanceof LivingEntity) {
+                                ((LivingEntity) e2).damage(3 * level);
                             }
                         }
                     }
@@ -71,11 +75,9 @@ public class Lightning extends RegularM {
             public void run() {
                 if (end) {
                     this.cancel();
-                }
-                Double d = 5 * Math.pow(1.5, level);
-                if (end) {
                     return;
                 }
+                Double d = 5 * Math.pow(1.5, level);
                 ParticleUtil.createAOEParticles(caster, d, 0.0, 255.0, 255.0, 0.0, 1);
             }
         }.runTaskTimer(Main.getInstance(), 0, 1);
@@ -91,7 +93,7 @@ public class Lightning extends RegularM {
                     for(Integer i = 0; i < 10; i++) {
                         world.spawnParticle(Particle.REDSTONE, loc.getX(), loc.getY() + 2.0 + distanceFromPlayer , loc.getZ(), 0, 1, 1, 0.0);
                     }
-                    for(Integer i = 0; i < 10; i++) {
+                    for(Integer i = 0; i < 2; i++) {
                         world.spawnParticle(Particle.REDSTONE, loc.getX(), loc.getY(), loc.getZ(), 0, (120.0 + 135.0 * (castTime - time) / castTime) / 255.0 , 0.0, 21/255.0);
                         world.spawnParticle(Particle.REDSTONE, loc.getX() + 0.5, loc.getY(), loc.getZ() + 0.5, 0, (120.0 + 135.0 * (castTime - time) / castTime) / 255.0 , 0.0, 21/255.0);
                         world.spawnParticle(Particle.REDSTONE, loc.getX() + 0.5, loc.getY(), loc.getZ() - 0.5, 0, (120.0 + 135.0 * (castTime - time) / castTime) / 255.0 , 0.0, 21/255.0);
