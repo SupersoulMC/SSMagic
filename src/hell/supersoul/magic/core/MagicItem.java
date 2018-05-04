@@ -21,6 +21,7 @@ public class MagicItem {
     HashMap<Magic, Integer> magicEXP = new HashMap<>();
     int slots = 0;
     MagicItemType itemType = null;
+    HashMap<ShortcutType, Integer> shortcuts = new HashMap<>();
 
     public MagicItem(MagicItemType itemType, int slots) {
         this.itemType = itemType;
@@ -50,5 +51,9 @@ public class MagicItem {
     public ArrayList<Magic> getMagics() {
         return magics;
     }
+
+	public HashMap<ShortcutType, Integer> getShortcuts() {
+		return shortcuts;
+	}
 
 }

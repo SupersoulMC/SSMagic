@@ -3,6 +3,7 @@ package hell.supersoul.magic.managers;
 import hell.supersoul.magic.core.Magic;
 import hell.supersoul.magic.core.MagicItem;
 import hell.supersoul.magic.core.MagicItem.MagicItemType;
+import hell.supersoul.magic.core.MagicItem.ShortcutType;
 import hell.supersoul.magic.util.Util;
 
 import org.bukkit.Bukkit;
@@ -43,6 +44,7 @@ public class LoreManager {
         MagicItemType itemType = null;
         ArrayList<Magic> magics = new ArrayList<>();
         HashMap<Magic, Integer> magicEXP = new HashMap<>();
+        HashMap<ShortcutType, Integer> shortcuts = new HashMap<>();
 
         //Loops through the magic statements in the lore
         for (String string : statements) {
@@ -105,12 +107,31 @@ public class LoreManager {
                 magics.add(magic);
                 magicEXP.put(magic, expLevel);
             }
+            
+            //Creates shortcut
+            else if (string.startsWith("SHORTCUT")) {
+            	String[] words = string.split(" ");
+            	if (words.length < 3)
+            		return null;
+            	ShortcutType shortcutType = ShortcutType.valueOf(words[1]);
+            	if (shortcutType == null)
+            		return null;
+            	if (shortcuts.containsKey(shortcutType))
+            		return null;
+            	int magicOrder = Integer.parseInt(words[2]);
+            	if (magicOrder < 0)
+            		return null;
+            	if (magicOrder > magics.size() -1)
+            		return null;
+            	shortcuts.put(shortcutType, magicOrder);
+            }
         }
 
         //Creates the MagicItem
         MagicItem magicItem = new MagicItem(itemType, slots);
         magicItem.getMagics().addAll(magics);
         magicItem.getMagicEXP().putAll(magicEXP);
+        magicItem.getShortcuts().putAll(shortcuts);
 
         return magicItem;
     }

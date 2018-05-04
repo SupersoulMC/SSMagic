@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
@@ -13,13 +14,24 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 
+import hell.supersoul.magic.core.MagicItem.ShortcutType;
+
 public class EventListener implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
-        // if (event.getAction().equals(Action.LEFT_CLICK_AIR) ||
-        // event.getAction().equals(Action.LEFT_CLICK_BLOCK))
-        // ComboManager.executeHit(event.getPlayer());
+        Player player = event.getPlayer();
+        if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+        	if (!player.isSneaking())
+        		EquipmentManager.triggerShortcut(player, ShortcutType.RIGHT_CLICK);
+        	else
+        		EquipmentManager.triggerShortcut(player, ShortcutType.SHIFT_RIGHT_CLICK);
+        } else if (event.getAction().equals(Action.LEFT_CLICK_AIR) || event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
+        	if (!player.isSneaking())
+        		EquipmentManager.triggerShortcut(player, ShortcutType.LEFT_CLICK);
+        	else
+        		EquipmentManager.triggerShortcut(player, ShortcutType.SHIFT_LEFT_CLICK);
+        }
     }
 
     @EventHandler
@@ -73,5 +85,7 @@ public class EventListener implements Listener {
     public void onItemDamage(PlayerItemDamageEvent event) {
     	event.setCancelled(true);
     }
+    
+    
 
 }
