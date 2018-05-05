@@ -22,7 +22,7 @@ import java.util.List;
 public class Lightning extends RegularM {
 
     World world;
-    Integer time = 0;
+    double time = 0;
     Boolean end = false;
     List<Location> targeted = new ArrayList<>();
 
@@ -34,7 +34,10 @@ public class Lightning extends RegularM {
     public boolean cast(Player caster) {
         world = caster.getWorld();
         List<Location> newtargeted = new ArrayList<>();
-        for (Entity e : caster.getWorld().getNearbyEntities(caster.getLocation(), 5 * Math.pow(1.5, level), 3, 5 * Math.pow(1.5, level))) {
+        //Radius = 5 * level
+        //Time = 5 * (6 - level)
+        //Damage = 5 * level
+        for (Entity e : caster.getWorld().getNearbyEntities(caster.getLocation(), 5 * level, 3, 5 * level)) {
             if (!e.equals(caster) && !targeted.contains(e)) {
                 if (e instanceof LivingEntity) {
                     newtargeted.add(e.getLocation());
@@ -46,8 +49,8 @@ public class Lightning extends RegularM {
         new BukkitRunnable() {
             @Override
             public void run() {
-                time++;
-                if (time == Math.round(5 * Math.pow(0.9, level) * 20)) {
+                time+=1.0;
+                if (time == 5 * (6 - level) * 20.0) {
                     Main.getInstance().getEventProcessor().freezed.put(caster.getName(), false);
                     end = true;
                     this.cancel();
@@ -61,9 +64,9 @@ public class Lightning extends RegularM {
                                 ((CraftPlayer) e2).getHandle().playerConnection.sendPacket(pponse);
                             }
                         }
-                        for (Entity e2 : loc.getWorld().getNearbyEntities(loc, 0.5, 0.5, 0.5)) {
+                        for (Entity e2 : loc.getWorld().getNearbyEntities(loc, 1.0, 1.0, 1.0)) {
                             if (e2 instanceof LivingEntity) {
-                                ((LivingEntity) e2).damage(3 * level);
+                                ((LivingEntity) e2).damage(5 * level);
                             }
                         }
                     }
@@ -78,10 +81,11 @@ public class Lightning extends RegularM {
                     this.cancel();
                     return;
                 }
-                Double d = 5 * Math.pow(1.5, level);
+                double d = 5 * level;
                 ParticleUtil.createAOEParticles(caster, d, 0.0, 255.0, 255.0, 0.0, 1);
             }
         }.runTaskTimer(Main.getInstance(), 0, 5);
+        double castTime = 5 * (6 - level) * 20.0;
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -89,8 +93,7 @@ public class Lightning extends RegularM {
                     this.cancel();
                 }
                 for (Location loc : targeted) {
-                    Double castTime = Math.round(5 * Math.pow(0.9, level) * 20) * 1.0;
-                    Double distanceFromPlayer = (castTime - time) / castTime * 255.0;
+                    double distanceFromPlayer = (castTime - time) / castTime * (255.0 - loc.getY());
                     for (Integer i = 0; i < 10; i++) {
                         world.spawnParticle(Particle.REDSTONE, loc.getX(), loc.getY() + 2.0 + distanceFromPlayer + 1.1, loc.getZ(), 0, 1, 1, 0.0);
                         world.spawnParticle(Particle.REDSTONE, loc.getX(), loc.getY() + 2.0 + distanceFromPlayer, loc.getZ(), 0, 1, 1, 0.0);
