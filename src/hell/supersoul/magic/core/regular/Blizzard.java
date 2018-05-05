@@ -126,4 +126,9 @@ public class Blizzard extends RegularM {
         return false;
     }
 
+    @Override
+    public RegularMEnum getType() {
+        return RegularMEnum.BLIZZARD;
+    }
+
 }

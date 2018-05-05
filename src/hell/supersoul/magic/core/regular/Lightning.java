@@ -108,4 +108,9 @@ public class Lightning extends RegularM {
         return false;
     }
 
+    @Override
+    public RegularMEnum getType() {
+        return RegularMEnum.LIGHTNING;
+    }
+
 }

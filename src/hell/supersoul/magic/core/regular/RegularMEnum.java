@@ -4,28 +4,28 @@ import hell.supersoul.magic.core.RegularM;
 
 public enum RegularMEnum {
 
-    Blizzard {
+    BLIZZARD {
         @Override
         public RegularM get(Integer level) {
             return new Blizzard(level);
         }
     },
 
-    Fire {
+    FIRE {
         @Override
         public RegularM get(Integer level) {
             return new Fire(level);
         }
     },
 
-    Lightning {
+    LIGHTNING {
         @Override
         public RegularM get(Integer level) {
             return new Lightning(level);
         }
     },
 
-    Water {
+    WATER {
         @Override
         public RegularM get(Integer level) {
             return new Water(level);

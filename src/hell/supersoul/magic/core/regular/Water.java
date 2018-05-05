@@ -50,5 +50,8 @@ public class Water extends RegularM {
         return false;
     }
 
-
+    @Override
+    public RegularMEnum getType() {
+        return RegularMEnum.WATER;
+    }
 }
