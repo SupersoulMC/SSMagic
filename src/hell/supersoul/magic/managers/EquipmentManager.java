@@ -6,7 +6,6 @@ import hell.supersoul.magic.core.MagicItem;
 import hell.supersoul.magic.core.MagicItem.MagicItemType;
 import hell.supersoul.magic.core.MagicItem.ShortcutType;
 import hell.supersoul.magic.core.RegularM;
-
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -67,14 +66,13 @@ public class EquipmentManager {
             item = player.getInventory().getItem(slot);
         ItemStack current = currentItem.get(player).get(eSlot);
         if (item == current) {
-        	player.sendMessage("same");
+            player.sendMessage("same");
             return;
-        }
-        else {
+        } else {
             currentItem.get(player).put(eSlot, item);
             player.sendMessage("replace");
         }
-        
+
         // Checks if the new item is air, then remove the MagicItem from the player's
         // data.
         if (item == null || item.getType().equals(Material.AIR)) {
@@ -114,79 +112,79 @@ public class EquipmentManager {
             return false;
         }
     }
-    
+
     //Gets the Magic Item instance for a player for a equipment slot.
     public static MagicItem getMagicItem(Player player, EquipmentSlot slot) {
-    	if (player == null)
-    		return null;
-    	if (slot == null)
-    		return null;
-    	if (!equipmentData.containsKey(player))
-    		return null;
-    	return equipmentData.get(player).get(slot);
+        if (player == null)
+            return null;
+        if (slot == null)
+            return null;
+        if (!equipmentData.containsKey(player))
+            return null;
+        return equipmentData.get(player).get(slot);
     }
-    
+
     //Under normal circumstances, there is only one combo magic for one magic item, return null if more than one.
     public static ComboM getTheOnlyComboMagic(MagicItem item) {
-    	if (item == null)
-    		return null;
-    	int n = 0;
-    	Magic result = null;
-    	for (Magic magic : item.getMagics()) {
-    		if (magic instanceof ComboM) {
-    			n++;
-    			result = magic;
-    		}
-    	}
-    	if (n > 1)
-    		return null;
-    	return (ComboM) result;
+        if (item == null)
+            return null;
+        int n = 0;
+        Magic result = null;
+        for (Magic magic : item.getMagics()) {
+            if (magic instanceof ComboM) {
+                n++;
+                result = magic;
+            }
+        }
+        if (n > 1)
+            return null;
+        return (ComboM) result;
     }
-    
+
     //Triggers the shortcut of the magic item.
     public static void triggerShortcut(Player player, ShortcutType type) {
-    	
-    	//Safety checks
-    	if (player == null)
-    		return;
-    	if (type == null)
-    		return;
-    	if (!equipmentData.containsKey(player))
-    		return;
-    	MagicItem item = equipmentData.get(player).get(EquipmentSlot.HAND);
-    	if (item == null)
-    		return;
-    	if (item.getShortcuts().size() < 0)
-    		return;
-    	if (!item.getShortcuts().containsKey(type))
-    		return;
-    	
-    	if (!canUnleashMagic(player))
-    		return;
-    	
-    	//The magic type must be regular
-    	Magic magic = item.getMagics().get(item.getShortcuts().get(type));
-    	if (!(magic instanceof RegularM))
-    		return;
-    	
-    	//You cannot left click a weapon as shortcut
-    	if (item.getItemType().equals(MagicItemType.TOOL) && type.equals(ShortcutType.LEFT_CLICK))
-    		return;
-    	
-    	//You cannot right click book as shortcut
-    	if (item.getItemType().equals(MagicItemType.BOOK) && type.equals(ShortcutType.RIGHT_CLICK))
-    		return;
-    	
-    	((RegularM) magic).cast(player);
-    	
+
+        //Safety checks
+        if (player == null)
+            return;
+        if (type == null)
+            return;
+        if (!equipmentData.containsKey(player))
+            return;
+        MagicItem item = equipmentData.get(player).get(EquipmentSlot.HAND);
+        if (item == null)
+            return;
+        if (item.getShortcuts().size() < 0)
+            return;
+        if (!item.getShortcuts().containsKey(type))
+            return;
+
+        if (!canUnleashMagic(player))
+            return;
+
+        //The magic type must be regular
+        Magic magic = item.getMagics().get(item.getShortcuts().get(type));
+        if (!(magic instanceof RegularM))
+            return;
+
+        //You cannot left click a weapon as shortcut
+        if (item.getItemType().equals(MagicItemType.TOOL) && type.equals(ShortcutType.LEFT_CLICK))
+            return;
+
+        //You cannot right click book as shortcut
+        if (item.getItemType().equals(MagicItemType.BOOK) && type.equals(ShortcutType.RIGHT_CLICK))
+            return;
+
+        ((RegularM) magic).cast(player);
+
     }
-    
+
     //Checks if the player can unleash a magic
     public static boolean canUnleashMagic(Player player) {
-    	if (ComboManager.getCurrentHitTask().containsKey(player))
-    		return false;
-    	if (!player.isOnGround())
-    		return false;
-    	return true;
+        if (ComboManager.getCurrentHitTask().containsKey(player))
+            return false;
+        if (!player.isOnGround())
+            return false;
+        return true;
     }
 }

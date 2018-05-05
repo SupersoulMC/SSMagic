@@ -1,20 +1,14 @@
 package hell.supersoul.magic.events;
 
 import hell.supersoul.magic.Main;
-import hell.supersoul.magic.core.RegularM;
-import hell.supersoul.magic.core.combo.Berserk;
-import hell.supersoul.magic.core.regular.Lightning;
 import hell.supersoul.magic.core.regular.RegularMEnum;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,8 +42,8 @@ public class EventProcesser extends Event implements Listener {
 
     @EventHandler
     public void onMove(PlayerMoveEvent e) {
-        if(freezed.containsKey(e.getPlayer().getName()) && freezed.get(e.getPlayer().getName())) {
-            if(e.getTo().getX() != e.getFrom().getX() || e.getTo().getY() != e.getFrom().getY() || e.getTo().getZ() != e.getFrom().getZ()) {
+        if (freezed.containsKey(e.getPlayer().getName()) && freezed.get(e.getPlayer().getName())) {
+            if (e.getTo().getX() != e.getFrom().getX() || e.getTo().getY() != e.getFrom().getY() || e.getTo().getZ() != e.getFrom().getZ()) {
                 e.getPlayer().teleport(e.getFrom());
             }
         }

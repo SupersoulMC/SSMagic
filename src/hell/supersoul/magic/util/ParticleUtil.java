@@ -1,11 +1,9 @@
 package hell.supersoul.magic.util;
 
-import hell.supersoul.magic.Main;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class ParticleUtil {
 
@@ -28,7 +26,15 @@ public class ParticleUtil {
         }
     }
 
-    public static void createHelixParticles(World w, double x, double y, double z, double radius, double angle, double red, double green, double blue, int count) {
+    public static void createHelixParticles(World w, Particle p, double x, double y, double z, double radius, double angle, double ox, double oy, double oz, int count, double speed) {
+        double h1x = x - radius * Math.sin(Math.toRadians(angle));
+        double h1z = z + radius * Math.cos(Math.toRadians(angle));
+        for (int i = 0; i < count; i++) {
+            w.spawnParticle(p, h1x, y, h1z, count, ox, oy, oz, speed);
+        }
+    }
+
+    public static void createReddustHelixParticles(World w, double x, double y, double z, double radius, double angle, double red, double green, double blue, int count) {
         double h1x = x + radius * Math.sin(Math.toRadians(angle));
         double h1z = z + radius * Math.cos(Math.toRadians(angle));
         for (int i = 0; i < count; i++) {
@@ -36,15 +42,14 @@ public class ParticleUtil {
         }
     }
 
-
     public static void createArcParticles(World w, Location loc, double y1, double y2, double r1, double r2, double increment, int count, double distance) {
-        if(r2 > r1) {
+        if (r2 > r1) {
             Integer increases = 0;
-            for(double y = y2; y <= y1; y += increment) {
+            for (double y = y2; y <= y1; y += increment) {
                 increases++;
             }
             Double rincrement = (r2 - r1) / increases;
-            for(double y = y2; y <= y1; y += increment) {
+            for (double y = y2; y <= y1; y += increment) {
                 double h1x = loc.getX() - distance * Math.sin(Math.toRadians(r1 + rincrement));
                 double h1z = loc.getZ() + distance * Math.cos(Math.toRadians(r1 + rincrement));
                 for (int i = 0; i < count; i++) {
@@ -54,11 +59,11 @@ public class ParticleUtil {
             }
         } else {
             Integer increases = 0;
-            for(double y = y1; y <= y2; y += increment) {
+            for (double y = y1; y <= y2; y += increment) {
                 increases++;
             }
             Double rincrement = (r1 - r2) / increases;
-            for(double y = y2; y >= y1; y -= increment) {
+            for (double y = y2; y >= y1; y -= increment) {
                 double h1x = loc.getX() - distance * Math.sin(Math.toRadians(r2 + rincrement));
                 double h1z = loc.getZ() + distance * Math.cos(Math.toRadians(r2 + rincrement));
                 for (int i = 0; i < count; i++) {

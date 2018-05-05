@@ -5,8 +5,6 @@ import hell.supersoul.magic.core.MagicItem;
 import hell.supersoul.magic.core.MagicItem.MagicItemType;
 import hell.supersoul.magic.core.MagicItem.ShortcutType;
 import hell.supersoul.magic.util.Util;
-
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -107,23 +105,23 @@ public class LoreManager {
                 magics.add(magic);
                 magicEXP.put(magic, expLevel);
             }
-            
+
             //Creates shortcut
             else if (string.startsWith("SHORTCUT")) {
-            	String[] words = string.split(" ");
-            	if (words.length < 3)
-            		return null;
-            	ShortcutType shortcutType = ShortcutType.valueOf(words[1]);
-            	if (shortcutType == null)
-            		return null;
-            	if (shortcuts.containsKey(shortcutType))
-            		return null;
-            	int magicOrder = Integer.parseInt(words[2]);
-            	if (magicOrder < 0)
-            		return null;
-            	if (magicOrder > magics.size() -1)
-            		return null;
-            	shortcuts.put(shortcutType, magicOrder);
+                String[] words = string.split(" ");
+                if (words.length < 3)
+                    return null;
+                ShortcutType shortcutType = ShortcutType.valueOf(words[1]);
+                if (shortcutType == null)
+                    return null;
+                if (shortcuts.containsKey(shortcutType))
+                    return null;
+                int magicOrder = Integer.parseInt(words[2]);
+                if (magicOrder < 0)
+                    return null;
+                if (magicOrder > magics.size() - 1)
+                    return null;
+                shortcuts.put(shortcutType, magicOrder);
             }
         }
 

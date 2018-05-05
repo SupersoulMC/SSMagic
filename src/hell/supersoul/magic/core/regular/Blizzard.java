@@ -60,11 +60,9 @@ public class Blizzard extends RegularM {
             public void run() {
                 if (end) {
                     this.cancel();
-                }
-                Double d = level * 2.0;
-                if (end) {
                     return;
                 }
+                Double d = level * 2.0;
                 Location l = caster.getLocation();
                 ParticleUtil.createAOEParticles(caster, d, 0.0, 204.0 / level, 255.0, 255.0, 1);
             }
@@ -115,8 +113,8 @@ public class Blizzard extends RegularM {
                         return;
                     }
                     Location l = caster.getLocation();
-                    ParticleUtil.createHelixParticles(l.getWorld(), l.getX(), hyoriginal + l.getY(), l.getZ(), d, horiginal, 204.0 / level, 255.0, 255.0, 4);
-                    ParticleUtil.createHelixParticles(l.getWorld(), l.getX(), hyoriginal + l.getY(), l.getZ(), d, horiginal + 180, 204.0 / level, 255.0, 255.0, 4);
+                    ParticleUtil.createReddustHelixParticles(l.getWorld(), l.getX(), hyoriginal + l.getY(), l.getZ(), d, horiginal, 204.0 / level, 255.0, 255.0, 4);
+                    ParticleUtil.createReddustHelixParticles(l.getWorld(), l.getX(), hyoriginal + l.getY(), l.getZ(), d, horiginal + 180, 204.0 / level, 255.0, 255.0, 4);
                     hyoriginal += 0.1;
                     if (hyoriginal > 2.0) {
                         hyoriginal = 0.0;

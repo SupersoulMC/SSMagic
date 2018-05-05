@@ -85,22 +85,22 @@ public class Lightning extends RegularM {
         new BukkitRunnable() {
             @Override
             public void run() {
-                    if (end) {
-                        this.cancel();
-                    }
-                    for (Location loc : targeted) {
+                if (end) {
+                    this.cancel();
+                }
+                for (Location loc : targeted) {
                     Double castTime = Math.round(5 * Math.pow(0.9, level) * 20) * 1.0;
                     Double distanceFromPlayer = (castTime - time) / castTime * 255.0;
-                    for(Integer i = 0; i < 10; i++) {
-                        world.spawnParticle(Particle.REDSTONE, loc.getX(), loc.getY() + 2.0 + distanceFromPlayer + 1.1 , loc.getZ(), 0, 1, 1, 0.0);
-                        world.spawnParticle(Particle.REDSTONE, loc.getX(), loc.getY() + 2.0 + distanceFromPlayer , loc.getZ(), 0, 1, 1, 0.0);
+                    for (Integer i = 0; i < 10; i++) {
+                        world.spawnParticle(Particle.REDSTONE, loc.getX(), loc.getY() + 2.0 + distanceFromPlayer + 1.1, loc.getZ(), 0, 1, 1, 0.0);
+                        world.spawnParticle(Particle.REDSTONE, loc.getX(), loc.getY() + 2.0 + distanceFromPlayer, loc.getZ(), 0, 1, 1, 0.0);
                     }
-                    for(Integer i = 0; i < 1; i++) {
-                        world.spawnParticle(Particle.REDSTONE, loc.getX(), loc.getY(), loc.getZ(), 0, (120.0 + 135.0 * (castTime - time) / castTime) / 255.0 , 0.0, 21/255.0);
-                        world.spawnParticle(Particle.REDSTONE, loc.getX() + 0.5, loc.getY(), loc.getZ() + 0.5, 0, (120.0 + 135.0 * (castTime - time) / castTime) / 255.0 , 0.0, 21/255.0);
-                        world.spawnParticle(Particle.REDSTONE, loc.getX() + 0.5, loc.getY(), loc.getZ() - 0.5, 0, (120.0 + 135.0 * (castTime - time) / castTime) / 255.0 , 0.0, 21/255.0);
-                        world.spawnParticle(Particle.REDSTONE, loc.getX()  - 0.5, loc.getY(), loc.getZ() - 0.5, 0, (120.0 + 135.0 * (castTime - time) / castTime) / 255.0 , 0.0, 21/255.0);
-                        world.spawnParticle(Particle.REDSTONE, loc.getX() - 0.5, loc.getY(), loc.getZ() + 0.5, 0, (120.0 + 135.0 * (castTime - time) / castTime) / 255.0 , 0.0, 21/255.0);
+                    for (Integer i = 0; i < 1; i++) {
+                        world.spawnParticle(Particle.REDSTONE, loc.getX(), loc.getY(), loc.getZ(), 0, (120.0 + 135.0 * (castTime - time) / castTime) / 255.0, 0.0, 21 / 255.0);
+                        world.spawnParticle(Particle.REDSTONE, loc.getX() + 0.5, loc.getY(), loc.getZ() + 0.5, 0, (120.0 + 135.0 * (castTime - time) / castTime) / 255.0, 0.0, 21 / 255.0);
+                        world.spawnParticle(Particle.REDSTONE, loc.getX() + 0.5, loc.getY(), loc.getZ() - 0.5, 0, (120.0 + 135.0 * (castTime - time) / castTime) / 255.0, 0.0, 21 / 255.0);
+                        world.spawnParticle(Particle.REDSTONE, loc.getX() - 0.5, loc.getY(), loc.getZ() - 0.5, 0, (120.0 + 135.0 * (castTime - time) / castTime) / 255.0, 0.0, 21 / 255.0);
+                        world.spawnParticle(Particle.REDSTONE, loc.getX() - 0.5, loc.getY(), loc.getZ() + 0.5, 0, (120.0 + 135.0 * (castTime - time) / castTime) / 255.0, 0.0, 21 / 255.0);
                     }
                 }
             }

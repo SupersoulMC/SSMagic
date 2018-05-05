@@ -1,5 +1,6 @@
 package hell.supersoul.magic.managers;
 
+import hell.supersoul.magic.core.MagicItem.ShortcutType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -14,23 +15,21 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 
-import hell.supersoul.magic.core.MagicItem.ShortcutType;
-
 public class EventListener implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-        	if (!player.isSneaking())
-        		EquipmentManager.triggerShortcut(player, ShortcutType.RIGHT_CLICK);
-        	else
-        		EquipmentManager.triggerShortcut(player, ShortcutType.SHIFT_RIGHT_CLICK);
+            if (!player.isSneaking())
+                EquipmentManager.triggerShortcut(player, ShortcutType.RIGHT_CLICK);
+            else
+                EquipmentManager.triggerShortcut(player, ShortcutType.SHIFT_RIGHT_CLICK);
         } else if (event.getAction().equals(Action.LEFT_CLICK_AIR) || event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
-        	if (!player.isSneaking())
-        		EquipmentManager.triggerShortcut(player, ShortcutType.LEFT_CLICK);
-        	else
-        		EquipmentManager.triggerShortcut(player, ShortcutType.SHIFT_LEFT_CLICK);
+            if (!player.isSneaking())
+                EquipmentManager.triggerShortcut(player, ShortcutType.LEFT_CLICK);
+            else
+                EquipmentManager.triggerShortcut(player, ShortcutType.SHIFT_LEFT_CLICK);
         }
     }
 
@@ -80,12 +79,11 @@ public class EventListener implements Listener {
             EquipmentManager.checkAndUpdate(player, slot, event.getOldCursor());
         }
     }
-    
+
     @EventHandler
     public void onItemDamage(PlayerItemDamageEvent event) {
-    	event.setCancelled(true);
+        event.setCancelled(true);
     }
-    
-    
+
 
 }

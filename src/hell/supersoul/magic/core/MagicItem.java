@@ -12,9 +12,9 @@ public class MagicItem {
     public enum MagicType {
         REGULAR, COMBO, LOCKED
     }
-    
+
     public enum ShortcutType {
-    	LEFT_CLICK, RIGHT_CLICK, SHIFT_LEFT_CLICK, SHIFT_RIGHT_CLICK;
+        LEFT_CLICK, RIGHT_CLICK, SHIFT_LEFT_CLICK, SHIFT_RIGHT_CLICK;
     }
 
     ArrayList<Magic> magics = new ArrayList<>();
@@ -52,8 +52,8 @@ public class MagicItem {
         return magics;
     }
 
-	public HashMap<ShortcutType, Integer> getShortcuts() {
-		return shortcuts;
-	}
+    public HashMap<ShortcutType, Integer> getShortcuts() {
+        return shortcuts;
+    }
 
 }
