@@ -37,13 +37,6 @@ public class Blizzard extends RegularM {
 
     @Override
     public boolean cast(Player caster) {
-    	hyoriginal = 0.0;
-        horiginal = 0.0;
-        d = 1.0;
-        time = 0;
-        end = false;
-        affected = new ArrayList<>();
-        changed = new LinkedHashMap<Location, Material>();
         new BukkitRunnable() {
             @Override
             public void run() {
