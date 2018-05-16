@@ -1,5 +1,7 @@
 package hell.supersoul.magic.managers;
 
+import hell.supersoul.magic.core.ComboM;
+import hell.supersoul.magic.core.LockedM;
 import hell.supersoul.magic.core.Magic;
 import hell.supersoul.magic.core.MagicItem;
 import hell.supersoul.magic.core.MagicItem.MagicItemType;
@@ -12,7 +14,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class LoreManager {
 
@@ -35,9 +39,16 @@ public class LoreManager {
 
         //Initialize variables for looping
         lore = Util.convertToVisibleString(lore);
-        String[] statements = lore.split("\\|");
-        if (!statements[0].equals("SSMAGIC"))
-            return null;
+        String target = null;
+        for(String line : lore.split("#")) {
+        	if (line.startsWith("SSMAGIC|")) {
+        		target = line;
+        		break;
+        	}
+        }
+        if (target == null)
+        	return null;
+        String[] statements = target.split("\\|");
         int slots = 0;
         MagicItemType itemType = null;
         ArrayList<Magic> magics = new ArrayList<>();
@@ -132,5 +143,74 @@ public class LoreManager {
         magicItem.getShortcuts().putAll(shortcuts);
 
         return magicItem;
+    }
+    
+    //Converts a MagicItem instance for a String.
+    public static String getLore(MagicItem item) {
+    	
+    	//Safety check.
+    	if (item == null)
+    		 return null;
+    	
+    	//Sets itemtype and slots and prefix.
+    	String output = "SSMAGIC |";
+    	output = output + "itemType " + item.getItemType() + "|";
+    	output = output + "slots " + item.getSlots() + "|";
+    	
+    	//Sets the Magics.
+    	for (Magic magic : item.getMagics()) {
+    		
+    		String type = "REGULAR";
+    		if (magic instanceof ComboM)
+    			type = "COMBO";
+    		if (magic instanceof LockedM)
+    			type = "LOCKED";
+    		
+    		output = output + "MAGIC " + type + " " + magic.getClass().getSimpleName() + " " + magic.getLevel() + " " + item.getMagicEXP().get(magic) + "|";
+    	}
+    	
+    	//Sets the shortcuts.
+    	for (ShortcutType type : item.getShortcuts().keySet()) {
+    		output = output + "SHORTCUT " + type + " " + item.getShortcuts().get(type) + "|";
+    	}
+    	
+    	return output;
+    }
+    
+    public static ItemStack updateItemStack(MagicItem mi, ItemStack item) {
+    	
+    	//Safety checks.
+    	if (mi == null)
+    		return null;
+    	if (item == null)
+    		return null;
+    	ItemMeta meta = item.getItemMeta();
+    	if (meta == null)
+    		return null;
+    	if (!meta.hasLore())
+    		return null;
+    	
+    	//Finds the SSMAGIC lore.
+    	int index = -1;
+    	String data = Util.convertToVisibleString(meta.getLore().get(meta.getLore().size()-1));
+    	List<String> list = Arrays.asList(data.split("#"));
+    	for (String line : list) {
+    		if (line.startsWith("SSMAGIC|")) {
+    			index = list.indexOf(line);
+    			break;
+    		}
+    	}
+    	if (index < 0)
+    		return null;
+    	
+    	//Updates the line of lore.
+    	String line = LoreManager.getLore(mi);
+    	list.set(index, line);
+    	List<String> lore =  meta.getLore();
+    	lore.set(meta.getLore().size()-1, Util.convertToInvisibleString(String.join("", list)));
+    	meta.setLore(lore);
+    	item.setItemMeta(meta);
+    	
+    	return item;
     }
 }
