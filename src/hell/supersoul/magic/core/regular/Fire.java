@@ -61,9 +61,4 @@ public class Fire extends RegularM {
         }
         return false;
     }
-
-    @Override
-    public RegularMEnum getType() {
-        return RegularMEnum.FIRE;
-    }
 }

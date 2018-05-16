@@ -6,7 +6,6 @@ import hell.supersoul.magic.core.MagicItem;
 import hell.supersoul.magic.core.MagicItem.MagicItemType;
 import hell.supersoul.magic.core.MagicItem.ShortcutType;
 import hell.supersoul.magic.core.RegularM;
-import hell.supersoul.magic.core.regular.RegularMEnum;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -178,8 +177,7 @@ public class EquipmentManager {
         if (item.getItemType().equals(MagicItemType.BOOK) && type.equals(ShortcutType.RIGHT_CLICK))
             return;
 
-        RegularM newm = ((RegularM) magic).getType().get(((RegularM) magic).level);
-        newm.cast(player);
+        ((RegularM)magic).cast(player);
 
     }
 

@@ -1,7 +1,6 @@
 package hell.supersoul.magic.events;
 
 import hell.supersoul.magic.Main;
-import hell.supersoul.magic.core.regular.RegularMEnum;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
@@ -35,7 +34,7 @@ public class EventProcesser extends Event implements Listener {
     public void cast(PlayerInteractEvent e) {
         if (e.getPlayer().getInventory().getItemInMainHand().getItemMeta() != null && e.getPlayer().getInventory().getItemInMainHand().hasItemMeta() && e.getPlayer().getInventory().getItemInMainHand().getItemMeta().hasDisplayName() && e.getPlayer().getInventory().getItemInMainHand().getItemMeta().getDisplayName().contains("Wand")) {
             String itemname = e.getPlayer().getInventory().getItemInMainHand().getItemMeta().getDisplayName();
-            RegularMEnum.valueOf(itemname.split(" ")[1].toUpperCase()).get(Integer.parseInt(itemname.split(" ")[2])).cast(e.getPlayer());
+            //RegularMEnum.valueOf(itemname.split(" ")[1].toUpperCase()).get(Integer.parseInt(itemname.split(" ")[2])).cast(e.getPlayer());
             e.setCancelled(true);
         }
     }
