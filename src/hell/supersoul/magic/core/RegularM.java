@@ -4,6 +4,8 @@ import hell.supersoul.magic.core.regular.RegularMEnum;
 import org.bukkit.entity.Player;
 
 public abstract class RegularM extends Magic {
+	
+	boolean casting = false;
 
     public RegularM(int level) {
         super(level);
