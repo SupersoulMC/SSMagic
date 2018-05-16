@@ -29,6 +29,7 @@ public class Main extends JavaPlugin {
 
         Bukkit.getPluginManager().registerEvents(eventProcessor, this);
         Bukkit.getPluginManager().registerEvents(new hell.supersoul.magic.managers.EventListener(), this);
+        Bukkit.getPluginManager().registerEvents(new hell.supersoul.magic.rpg.EventListener(), this);
 
     }
 
