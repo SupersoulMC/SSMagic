@@ -1,10 +1,16 @@
 package hell.supersoul.magic;
 
 import com.comphenix.protocol.ProtocolLibrary;
+
+import hell.supersoul.magic.config.MyConfig;
+import hell.supersoul.magic.config.MyConfigManager;
 import hell.supersoul.magic.events.EventProcesser;
+import hell.supersoul.magic.rpg.ManaManager;
+import hell.supersoul.magic.rpg.PlayerM;
 import hell.supersoul.magic.util.InventoryPacketListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -16,6 +22,7 @@ import java.util.ArrayList;
 
 public class Main extends JavaPlugin {
 
+	static MyConfigManager manager;
     static Main instance;
     EventProcesser eventProcessor;
 
@@ -30,12 +37,24 @@ public class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(eventProcessor, this);
         Bukkit.getPluginManager().registerEvents(new hell.supersoul.magic.managers.EventListener(), this);
         Bukkit.getPluginManager().registerEvents(new hell.supersoul.magic.rpg.EventListener(), this);
+        
+		manager = new MyConfigManager(this);
+		
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			Main.loadPlayerData(player);
+		}
 
     }
 
     @Override
     public void onDisable() {
+    	
         ProtocolLibrary.getProtocolManager().removePacketListeners(this);
+        
+        for (Player player : Bukkit.getOnlinePlayers()) {
+        	Main.unloadPlayerData(player);
+        }
+        
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
@@ -68,5 +87,63 @@ public class Main extends JavaPlugin {
     public EventProcesser getEventProcessor() {
         return eventProcessor;
     }
+
+	public static MyConfigManager getMyConfigManager() {
+		return manager;
+	}
+	
+	public static PlayerM loadPlayerData(Player player) {
+		
+		if (player == null)
+			return null;
+		if (PlayerM.getPlayerMs().containsKey(player)) {
+			unloadPlayerData(player);
+		}
+		
+		MyConfig data = Main.getMyConfigManager().getNewConfig("playerData/" + player.getName() + ".yml", new String[] {
+				"SS Magic Player Data File",
+				"Edit only when the plugin is disabled."
+				});
+		int exp = data.getInt("EXP");
+		PlayerM playerM = new PlayerM(player, exp);
+		
+		player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(playerM.getMaxHP());
+		player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(16);
+		
+		ManaManager.chargeMP(player);
+		
+		return playerM;
+	}
+	
+	public static void savePlayerData(Player player) {
+		
+		if (player == null)
+			return;
+		PlayerM playerM = PlayerM.getPlayerM(player);
+		if (playerM == null)
+			return;
+		
+		MyConfig data = Main.getMyConfigManager().getNewConfig("playerData/" + player.getName() + ".yml", new String[] {
+				"SS Magic Player Data File",
+				"Edit only when the plugin is disabled."
+				});
+		
+		data.set("EXP", playerM.getEXP());
+		data.saveConfig();
+		
+	}
+	
+	public static void unloadPlayerData(Player player) {
+		
+		if (player == null)
+			return;
+		PlayerM playerM = PlayerM.getPlayerM(player);
+		if (playerM == null)
+			return;
+		
+		Main.savePlayerData(player);
+		PlayerM.getPlayerMs().remove(player);
+		
+	}
 
 }
