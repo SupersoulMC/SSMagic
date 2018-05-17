@@ -21,7 +21,7 @@ public class Fire extends RegularM {
     }
 
     @Override
-    public boolean cast(Player caster) {
+    public void castEffects(Player caster) {
         Location start = caster.getLocation().add(0.0, 1.0, 0.0);
         for (Integer i = 0; i < 19; i++) {
             Vector vector = caster.getLocation().getDirection();
@@ -59,6 +59,6 @@ public class Fire extends RegularM {
                 }
             }.runTaskLater(Main.getInstance(), i);
         }
-        return false;
+        return;
     }
 }

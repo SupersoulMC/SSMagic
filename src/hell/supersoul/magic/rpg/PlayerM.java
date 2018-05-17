@@ -33,6 +33,8 @@ public class PlayerM {
 	public void setMP(int mP) {
 		MP = mP;
 		this.updateHUD();
+		if (MP <= 0)
+			ManaManager.chargeMP(player);
 	}
 
 	public int getEXP() {
@@ -66,7 +68,7 @@ public class PlayerM {
 	
 	public void updateHUD() {
 		player.setLevel(MP);
-		player.setExp(MP / this.getMaxMP());
+		player.setExp(MP / (float) this.getMaxMP());
 	}
 	
 }

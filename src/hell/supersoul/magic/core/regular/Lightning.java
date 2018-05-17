@@ -31,7 +31,7 @@ public class Lightning extends RegularM {
     }
 
     @Override
-    public boolean cast(Player caster) {
+    public void castEffects(Player caster) {
         world = caster.getWorld();
         List<Location> newtargeted = new ArrayList<>();
         //Radius = 5 * level
@@ -108,7 +108,7 @@ public class Lightning extends RegularM {
                 }
             }
         }.runTaskTimer(Main.getInstance(), 0, 5);
-        return false;
+        return;
     }
 
 }

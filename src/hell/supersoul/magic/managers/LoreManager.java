@@ -40,7 +40,7 @@ public class LoreManager {
         //Initialize variables for looping
         lore = Util.convertToVisibleString(lore);
         String target = null;
-        for(String line : lore.split("#")) {
+        for(String line : lore.split("\\#")) {
         	if (line.startsWith("SSMAGIC|")) {
         		target = line;
         		break;

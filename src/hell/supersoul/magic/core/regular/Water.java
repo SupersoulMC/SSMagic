@@ -19,7 +19,7 @@ public class Water extends RegularM {
     }
 
     @Override
-    public boolean cast(Player caster) {
+    public void castEffects(Player caster) {
         for (Entity e1 : caster.getWorld().getNearbyEntities(caster.getLocation(), 10.0, 10.0, 10.0)) {
             if (!e1.equals(caster) && Util.getLookingAt(caster, e1) && e1 instanceof LivingEntity) {
                 Location casterposition = caster.getLocation().add(0, 1, 0);
@@ -47,7 +47,7 @@ public class Water extends RegularM {
                 break;
             }
         }
-        return false;
+        return;
     }
 
 }
