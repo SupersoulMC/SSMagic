@@ -33,8 +33,10 @@ public class EventListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
+    	if (event.isCancelled())
+    		return;
         Entity ent = event.getDamager();
         if (!ent.getType().equals(EntityType.PLAYER))
             return;

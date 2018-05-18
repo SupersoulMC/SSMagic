@@ -1,6 +1,8 @@
 package hell.supersoul.magic;
 
 import com.comphenix.protocol.ProtocolLibrary;
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 
 import hell.supersoul.magic.config.MyConfig;
 import hell.supersoul.magic.config.MyConfigManager;
@@ -44,6 +46,10 @@ public class Main extends JavaPlugin {
 		
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			Main.loadPlayerData(player);
+		}
+		
+		for (Hologram holo : HologramsAPI.getHolograms(Main.getInstance())) {
+			holo.delete();
 		}
 
     }
