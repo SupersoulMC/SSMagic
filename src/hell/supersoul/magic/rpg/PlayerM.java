@@ -1,8 +1,11 @@
 package hell.supersoul.magic.rpg;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.bukkit.entity.Player;
+
+import hell.supersoul.magic.rpg.SAManager.StatusAilment;
 
 public class PlayerM {
 	
@@ -18,6 +21,8 @@ public class PlayerM {
 	int MP = 0;
 	int EXP = 0;
 	Player player = null;
+	HashMap<StatusAilment, Integer> statusAilments = new HashMap<>();
+	HashMap<StatusAilment, ArrayList<Integer>> statusAilmentsTasks = new HashMap<>();
 	
 	public PlayerM(Player player, int exp) {
 		this.EXP = exp;
@@ -33,6 +38,8 @@ public class PlayerM {
 	public void setMP(int mP) {
 		MP = mP;
 		this.updateHUD();
+		if (MP <= 0)
+			ManaManager.chargeMP(player);
 	}
 
 	public int getEXP() {
@@ -66,7 +73,15 @@ public class PlayerM {
 	
 	public void updateHUD() {
 		player.setLevel(MP);
-		player.setExp(MP / this.getMaxMP());
+		player.setExp(MP / (float) this.getMaxMP());
+	}
+
+	public HashMap<StatusAilment, Integer> getStatusAilments() {
+		return statusAilments;
+	}
+
+	public HashMap<StatusAilment, ArrayList<Integer>> getStatusAilmentsTasks() {
+		return statusAilmentsTasks;
 	}
 	
 }

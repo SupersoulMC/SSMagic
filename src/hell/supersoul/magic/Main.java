@@ -1,6 +1,8 @@
 package hell.supersoul.magic;
 
 import com.comphenix.protocol.ProtocolLibrary;
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 
 import hell.supersoul.magic.config.MyConfig;
 import hell.supersoul.magic.config.MyConfigManager;
@@ -8,6 +10,8 @@ import hell.supersoul.magic.events.EventProcesser;
 import hell.supersoul.magic.rpg.ManaManager;
 import hell.supersoul.magic.rpg.PlayerM;
 import hell.supersoul.magic.util.InventoryPacketListener;
+import hell.supersoul.magic.util.Util;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -43,6 +47,10 @@ public class Main extends JavaPlugin {
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			Main.loadPlayerData(player);
 		}
+		
+		for (Hologram holo : HologramsAPI.getHolograms(Main.getInstance())) {
+			holo.delete();
+		}
 
     }
 
@@ -70,7 +78,7 @@ public class Main extends JavaPlugin {
             ItemStack item = new ItemStack(Material.WOOD_SWORD);
             ItemMeta meta = item.getItemMeta();
             ArrayList<String> lore = new ArrayList<>();
-            String line = "SSMAGIC|itemType TOOL|slots 5|MAGIC COMBO Berserk 2 1|MAGIC REGULAR Blizzard 2 1|SHORTCUT RIGHT_CLICK 1|";
+            String line = Util.convertToInvisibleString("SSDATA#SSMAGIC|itemType TOOL|slots 12|MAGIC REGULAR Blizzard 4 1|MAGIC COMBO Berserk 2 1|MAGIC REGULAR Heal 4 1|SHORTCUT RIGHT_CLICK 0|SHORTCUT SHIFT_RIGHT_CLICK 2|#SSNPC|name Something|");
             lore.add(line);
             meta.setLore(lore);
             item.setItemMeta(meta);

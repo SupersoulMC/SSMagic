@@ -2,6 +2,7 @@ package hell.supersoul.magic.core.regular;
 
 import hell.supersoul.magic.Main;
 import hell.supersoul.magic.core.RegularM;
+import hell.supersoul.magic.rpg.ManaManager;
 import hell.supersoul.magic.util.ParticleUtil;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -33,10 +34,12 @@ public class Blizzard extends RegularM {
 
     public Blizzard(int level) {
         super(level);
+        requiredMP = 6;
     }
 
     @Override
-    public boolean cast(Player caster) {
+    public void castEffects(Player caster) {
+    	
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -123,7 +126,7 @@ public class Blizzard extends RegularM {
                 }
             }
         }.runTaskTimer(Main.getInstance(), 0, 1);
-        return false;
+        return;
     }
 
 }
