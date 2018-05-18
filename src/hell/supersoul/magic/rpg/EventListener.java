@@ -68,8 +68,11 @@ public class EventListener implements Listener {
 	
 	@EventHandler
 	public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
-		if (event.getCause().equals(DamageCause.ENTITY_SWEEP_ATTACK))
+		//Disable sweep.
+		if (event.getCause().equals(DamageCause.ENTITY_SWEEP_ATTACK)) {
 			event.setCancelled(true);
+			return;
+		}
 	}
 	
 }

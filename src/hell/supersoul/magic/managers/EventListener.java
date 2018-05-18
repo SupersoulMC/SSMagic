@@ -1,6 +1,8 @@
 package hell.supersoul.magic.managers;
 
 import hell.supersoul.magic.core.MagicItem.ShortcutType;
+import hell.supersoul.magic.managers.DamageM.DamageType;
+
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -42,6 +44,14 @@ public class EventListener implements Listener {
             return;
         Player player = (Player) ent;
         ComboManager.executeHit(player, event.getEntity());
+        
+        //RPG Part is put here to ensure the hit is executed.
+        DamageM damageM = new DamageM(event.getDamage());
+        damageM.setAttacker(event.getDamager());
+        damageM.setVictim(event.getEntity());
+        damageM.setDamageType(DamageType.PHYSICAL);
+        event.setDamage(damageM.getFinalDamage(true));
+        
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)

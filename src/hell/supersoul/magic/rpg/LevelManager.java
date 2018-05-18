@@ -78,6 +78,12 @@ public class LevelManager {
 		if (olevel != nlevel) {
 			player.sendMessage("level up");
 			player.sendMessage(olevel + " to " + nlevel);
+			playerM.updateHUD();
+			
+			//EXP capped at max level.
+			if (nlevel >= levelEXP.size() - 1) {
+				playerM.setEXP(levelEXP.get(nlevel));
+			}
 		}
 	}
 	

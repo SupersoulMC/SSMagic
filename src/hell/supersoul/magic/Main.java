@@ -70,6 +70,10 @@ public class Main extends JavaPlugin {
             return false;
         Player player = (Player) sender;
         if (cmd.getName().equals("magictest")) {
+        	
+        	if (!player.hasPermission("supersoul.staff"))
+        		return false;
+        	
 			/*
 			RegularM magic = new Lightning(Integer.parseInt(args[0]));
 			magic.cast(player);
@@ -84,6 +88,19 @@ public class Main extends JavaPlugin {
             item.setItemMeta(meta);
             player.getInventory().addItem(item);
 
+        } else if (cmd.getName().equals("statistics")) {
+        	
+        	PlayerM playerM = PlayerM.getPlayerM(player);
+        	if (playerM == null)
+        		return false;
+        	
+        	player.sendMessage("Level: " + playerM.getLevel());
+        	player.sendMessage("EXP: " + playerM.getEXP());
+        	player.sendMessage("Max HP: " + playerM.getMaxHP());
+        	player.sendMessage("Max MP: " + playerM.getMaxMP());
+        	player.sendMessage("Strength: " + playerM.getStrength());
+        	player.sendMessage("Defense: " + playerM.getDefense());
+        	
         }
         return false;
     }

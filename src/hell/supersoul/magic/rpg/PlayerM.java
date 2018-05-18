@@ -20,6 +20,8 @@ public class PlayerM {
 	
 	int MP = 0;
 	int EXP = 0;
+	int strength = 0;
+	int defense = 0;
 	Player player = null;
 	HashMap<StatusAilment, Integer> statusAilments = new HashMap<>();
 	HashMap<StatusAilment, ArrayList<Integer>> statusAilmentsTasks = new HashMap<>();
@@ -60,6 +62,9 @@ public class PlayerM {
 				return LevelManager.getLevelEXP().indexOf(exp) - 1;
 			}
 		}
+		int maxlv = LevelManager.getLevelEXP().size() - 1;
+		if (EXP >= LevelManager.getLevelEXP().get(maxlv))
+			return maxlv;
 		return 1;
 	}
 	
@@ -84,4 +89,11 @@ public class PlayerM {
 		return statusAilmentsTasks;
 	}
 	
+	public int getStrength() {
+		return LevelManager.getLevelStrength().get(getLevel());
+	}
+	
+	public int getDefense() {
+		return LevelManager.getLevelDefense().get(getLevel());
+	}
 }
