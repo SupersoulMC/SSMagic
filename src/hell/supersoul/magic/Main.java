@@ -9,6 +9,7 @@ import hell.supersoul.magic.config.MyConfigManager;
 import hell.supersoul.magic.events.EventProcesser;
 import hell.supersoul.magic.rpg.ManaManager;
 import hell.supersoul.magic.rpg.PlayerM;
+import hell.supersoul.magic.rpg.PlayerM.StatSource;
 import hell.supersoul.magic.util.InventoryPacketListener;
 import hell.supersoul.magic.util.Util;
 
@@ -98,8 +99,8 @@ public class Main extends JavaPlugin {
         	player.sendMessage("EXP: " + playerM.getEXP());
         	player.sendMessage("Max HP: " + playerM.getMaxHP());
         	player.sendMessage("Max MP: " + playerM.getMaxMP());
-        	player.sendMessage("Strength: " + playerM.getStrength());
-        	player.sendMessage("Defense: " + playerM.getDefense());
+        	player.sendMessage("Total Strength: " + playerM.getTotalStrength() + " [Level: " + playerM.getStrength(StatSource.LEVEL) + " Equipment: " + playerM.getStrength(StatSource.EQUIPMENT));
+        	player.sendMessage("Total Defense: " + playerM.getTotalDefense() + " [Level: " + playerM.getDefense(StatSource.LEVEL) + " Equipment: " + playerM.getDefense(StatSource.EQUIPMENT));
         	
         }
         return false;

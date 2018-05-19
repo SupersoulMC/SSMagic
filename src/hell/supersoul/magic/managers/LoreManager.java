@@ -50,6 +50,8 @@ public class LoreManager {
         	return null;
         String[] statements = target.split("\\|");
         int slots = 0;
+        int strength = 0;
+        int defense = 0;
         MagicItemType itemType = null;
         ArrayList<Magic> magics = new ArrayList<>();
         HashMap<Magic, Integer> magicEXP = new HashMap<>();
@@ -69,6 +71,32 @@ public class LoreManager {
                 if (slots != 0)
                     return null;
                 slots = s;
+            }
+            
+          //Sets the strength
+            if (string.startsWith("strength")) {
+                String[] words = string.split(" ");
+                if (words.length <= 1)
+                    return null;
+                int s = Integer.parseInt(words[1]);
+                if (s < 0)
+                    return null;
+                if (strength != 0)
+                    return null;
+                strength = s;
+            }
+            
+          //Sets the defense
+            if (string.startsWith("defense")) {
+                String[] words = string.split(" ");
+                if (words.length <= 1)
+                    return null;
+                int s = Integer.parseInt(words[1]);
+                if (s < 0)
+                    return null;
+                if (defense != 0)
+                    return null;
+                defense = s;
             }
 
             //Sets the item type
@@ -138,6 +166,8 @@ public class LoreManager {
 
         //Creates the MagicItem
         MagicItem magicItem = new MagicItem(itemType, slots);
+        magicItem.setDefense(defense);
+        magicItem.setStrength(strength);
         magicItem.getMagics().addAll(magics);
         magicItem.getMagicEXP().putAll(magicEXP);
         magicItem.getShortcuts().putAll(shortcuts);
