@@ -1,7 +1,11 @@
 package hell.supersoul.magic.util;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Effect;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
@@ -69,5 +73,34 @@ public class Util {
 		Location newLoc = origin.add(x, y, z);
 		return newLoc;
 	}
-
+	
+	public static Location randomLocationInRegion(Location loc1, Location loc2) {
+		if (!loc1.getWorld().equals(loc2.getWorld())) return null;
+		return new Location(loc1.getWorld(), randomInteger(loc1.getBlockX(), loc2.getBlockX()), randomInteger(loc1.getBlockY(), loc2.getBlockY()),randomInteger(loc1.getBlockZ(), loc2.getBlockZ()));
+	}
+	
+	public static void replaceBlock(Location loc1, Location loc2, Material replacement, Material mat, byte data, boolean effect) {
+		if (loc1.getWorld() == null || loc2.getWorld() == null) return;
+		if (mat == null) return;
+		if (!loc1.getWorld().equals(loc2.getWorld())) return;
+		int minX = Math.min(loc1.getBlockX(), loc2.getBlockX());
+		int minY = Math.min(loc1.getBlockY(), loc2.getBlockY());
+		int minZ = Math.min(loc1.getBlockZ(), loc2.getBlockZ());
+		int maxX = Math.max(loc1.getBlockX(), loc2.getBlockX());
+		int maxY = Math.max(loc1.getBlockY(), loc2.getBlockY());
+		int maxZ = Math.max(loc1.getBlockZ(), loc2.getBlockZ());
+		World world = loc1.getWorld();
+		for (int x = minX; x <= maxX; x++) {
+			for (int y = minY; y <= maxY; y++) {
+				for (int z = minZ; z <= maxZ; z++) {
+					Block block = world.getBlockAt(x, y, z);
+					if (!block.getType().equals(replacement)) continue;
+					if (effect)
+						world.playEffect(new Location(world, x, y, z), Effect.STEP_SOUND, block.getTypeId());
+					block.setType(mat);
+					block.setData(data);
+				}
+			}
+		}
+	}
 }
