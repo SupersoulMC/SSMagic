@@ -85,8 +85,8 @@ public class PlayerM {
 	}
 
 	public void updateHUD() {
-		player.setLevel(MP);
 		player.setExp(MP / (float) this.getMaxMP());
+		player.setLevel(MP);
 	}
 
 	public HashMap<StatusAilment, Integer> getStatusAilments() {

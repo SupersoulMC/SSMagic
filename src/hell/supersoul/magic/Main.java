@@ -83,7 +83,7 @@ public class Main extends JavaPlugin {
             ItemStack item = new ItemStack(Material.WOOD_SWORD);
             ItemMeta meta = item.getItemMeta();
             ArrayList<String> lore = new ArrayList<>();
-            String line = Util.convertToInvisibleString("SSDATA#SSMAGIC|itemType TOOL|slots 12|MAGIC REGULAR Blizzard 4 1|MAGIC COMBO Berserk 2 1|MAGIC REGULAR Heal 4 1|SHORTCUT RIGHT_CLICK 0|SHORTCUT SHIFT_RIGHT_CLICK 2|#SSNPC|name Something|");
+            String line = Util.convertToInvisibleString("SSDATA#SSMAGIC|itemType TOOL|strength 9|defense 1|slots 12|MAGIC REGULAR Blizzard 4 1|MAGIC COMBO Berserk 2 1|MAGIC REGULAR Heal 4 1|SHORTCUT RIGHT_CLICK 0|SHORTCUT SHIFT_RIGHT_CLICK 2|#SSNPC|name Something|");
             lore.add(line);
             meta.setLore(lore);
             item.setItemMeta(meta);
