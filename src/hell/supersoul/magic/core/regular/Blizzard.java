@@ -23,14 +23,14 @@ import java.util.Map.Entry;
 @SuppressWarnings("deprecation")
 public class Blizzard extends RegularM {
 
-    Double hyoriginal = 0.0;
-    Double horiginal = 0.0;
-    Double d = 1.0;
-    Integer time = 0;
-    Boolean end = false;
-    List<LivingEntity> affected = new ArrayList<>();
+    Double hyoriginal;
+    Double horiginal;
+    Double d;
+    Integer time;
+    Boolean end;
+    List<LivingEntity> affected;
     World world;
-    LinkedHashMap<Location, Material> changed = new LinkedHashMap<Location, Material>();
+    LinkedHashMap<Location, Material> changed;
 
     public Blizzard(int level) {
         super(level);
@@ -39,7 +39,14 @@ public class Blizzard extends RegularM {
 
     @Override
     public void castEffects(Player caster) {
-    	
+        hyoriginal = 0.0;
+        horiginal = 0.0;
+        d = 1.0;
+        time = 0;
+        end = false;
+        affected = new ArrayList<>();
+        world = null;
+        changed = new LinkedHashMap<>();
         new BukkitRunnable() {
             @Override
             public void run() {
