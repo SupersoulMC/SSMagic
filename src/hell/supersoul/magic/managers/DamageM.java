@@ -34,7 +34,7 @@ public class DamageM {
 
 		double damage = rawDamage;
 		double damageModifier = 1.0;
-		double defenseModifier = 1.0;
+		double reductionModifier = 1.0;
 		String debug = "RAW DAMAGE: " + rawDamage;
 		debug += " ATTACKER: ";
 		ChatColor damageColor = ChatColor.GOLD;
@@ -49,9 +49,9 @@ public class DamageM {
 					return 0;
 
 				// Consider player's strength.
-				double levelModifier = (playerM.getStrength() + 100d) / 100d;
-				damageModifier *= levelModifier;
-				debug += " The Level Modifier is: " + levelModifier;
+				double strengthModifier = (playerM.getTotalStrength() + 5d) / 5d;
+				damageModifier *= strengthModifier;
+				debug += " The Strength Modifier is: " + strengthModifier;
 
 				// Consider the hit level.
 				if (ComboManager.getCurrentHit().containsKey(player)) {
@@ -85,9 +85,9 @@ public class DamageM {
 					return 0;
 
 				// Consider player's defense;
-				double levelModifier = 100d / (playerM.getDefense() + 100d);
-				defenseModifier *= levelModifier;
-				debug += " The Level Modifier is: " + levelModifier;
+				double defenseModifier = 100d / (playerM.getTotalDefense() + 100d);
+				reductionModifier *= defenseModifier;
+				debug += " The Defense Modifier is: " + defenseModifier;
 
 				// TODO other things to consider:
 				// Locked Magic, Potion Effect, Status Ailments
@@ -98,25 +98,26 @@ public class DamageM {
 
 		}
 
-		damage = damage * damageModifier * defenseModifier;
+		damage = damage * damageModifier * reductionModifier;
 		debug += " FINAL DAMAGE: " + damage;
-		attacker.sendMessage(debug);
+		if (attacker != null)
+			attacker.sendMessage("A-" + debug);
+		victim.sendMessage("V-" + debug);
 
 		// Handle the hologram thing.
 		if (displayHolo) {
-			Location loc = Util.getRandomLocation(victim.getLocation().add(0,1,0), 0.7);
-			Bukkit.getLogger().info(loc + "");
+			Location loc = Util.getRandomLocation(victim.getLocation().add(0, 1, 0), 0.7);
 			if (attacker instanceof Player) {
 				Hologram holo1 = HologramsAPI.createHologram(Main.getInstance(), loc);
 				Player player = (Player) attacker;
 				holo1.getVisibilityManager().setVisibleByDefault(false);
 				holo1.getVisibilityManager().showTo(player);
-				holo1.appendTextLine(damageColor + "-" + (int)damage);
+				holo1.appendTextLine(damageColor + "-" + (int) damage);
 
 				Hologram holo2 = HologramsAPI.createHologram(Main.getInstance(), loc);
 				holo2.getVisibilityManager().setVisibleByDefault(true);
 				holo2.getVisibilityManager().hideTo(player);
-				holo2.appendTextLine(ChatColor.GRAY + "-" + (int)damage);
+				holo2.appendTextLine(ChatColor.GRAY + "-" + (int) damage);
 
 				new BukkitRunnable() {
 					@Override
@@ -128,7 +129,7 @@ public class DamageM {
 			} else {
 				Hologram holo2 = HologramsAPI.createHologram(Main.getInstance(), loc);
 				holo2.getVisibilityManager().setVisibleByDefault(true);
-				holo2.appendTextLine(ChatColor.GRAY + "-" + (int)damage);
+				holo2.appendTextLine(ChatColor.GRAY + "-" + (int) damage);
 
 				new BukkitRunnable() {
 					@Override

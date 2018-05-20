@@ -6,3 +6,6 @@ depend: [ProtocolLib]
 commands:
     magictest:
         description: SS Magic
+    statistics:
+        description: SS Magic
+        aliases: [stat, stats]
