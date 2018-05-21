@@ -18,13 +18,31 @@ public class Util {
 		return ChatColor.translateAlternateColorCodes((char) '&', s);
 	}
 
-	public static int randomInteger(int min, int max) {
-
-		Random rand = new Random();
-
-		int randomNum = rand.nextInt((max - min) + 1) + min;
-
-		return randomNum;
+	public static int randomInteger(int no1, int no2) {
+		int min = 0;
+		int max = 0;
+		if (no1 > no2) {
+			min = no2;
+			max = no1;
+		} else {
+			min = no1;
+			max = no2;
+		}
+		if(min >= 0 && max >= 0) {
+		    Random rand = new Random();
+		    int randomNum = rand.nextInt((max - min) + 1) + min;
+		    return randomNum;
+		} else if (min < 0 && max >= 0) {
+			max = max - min;
+			return (randomInteger(0, max) + min);
+		} else {
+			try {
+			return (randomInteger(min * -1, max * -1) * -1);
+			} catch (StackOverflowError error) {
+				error.printStackTrace();
+			}
+		}
+		return 0;
 	}
 
 	public static double randomDouble(double min, double max) {
@@ -75,7 +93,8 @@ public class Util {
 	}
 	
 	public static Location randomLocationInRegion(Location loc1, Location loc2) {
-		if (!loc1.getWorld().equals(loc2.getWorld())) return null;
+		if (!loc1.getWorld().equals(loc2.getWorld()))
+			return null;
 		return new Location(loc1.getWorld(), randomInteger(loc1.getBlockX(), loc2.getBlockX()), randomInteger(loc1.getBlockY(), loc2.getBlockY()),randomInteger(loc1.getBlockZ(), loc2.getBlockZ()));
 	}
 	

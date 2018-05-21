@@ -45,13 +45,13 @@ public class Lightning extends RegularM {
             }
         }
         targeted = newtargeted;
-        Main.getInstance().getEventProcessor().freezed.put(caster.getName(), true);
+        //TODO Paralyze player 
         new BukkitRunnable() {
             @Override
             public void run() {
                 time+=1.0;
                 if (time == 5 * (6 - level) * 20.0) {
-                    Main.getInstance().getEventProcessor().freezed.put(caster.getName(), false);
+                	//TODO unparalyze player
                     end = true;
                     this.cancel();
                     for (Location loc : targeted) {

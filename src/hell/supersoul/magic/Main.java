@@ -6,7 +6,6 @@ import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 
 import hell.supersoul.magic.config.MyConfig;
 import hell.supersoul.magic.config.MyConfigManager;
-import hell.supersoul.magic.events.EventProcesser;
 import hell.supersoul.magic.rpg.ManaManager;
 import hell.supersoul.magic.rpg.PlayerM;
 import hell.supersoul.magic.rpg.PlayerM.StatSource;
@@ -29,19 +28,17 @@ public class Main extends JavaPlugin {
 
 	static MyConfigManager manager;
     static Main instance;
-    EventProcesser eventProcessor;
 
     @Override
     public void onEnable() {
 
         instance = this;
 
-        eventProcessor = new EventProcesser(this);
         new InventoryPacketListener();
 
-        Bukkit.getPluginManager().registerEvents(eventProcessor, this);
         Bukkit.getPluginManager().registerEvents(new hell.supersoul.magic.managers.EventListener(), this);
         Bukkit.getPluginManager().registerEvents(new hell.supersoul.magic.rpg.EventListener(), this);
+        Bukkit.getPluginManager().registerEvents(new hell.supersoul.magic.mobs.EventListener(), this);
         
 		manager = new MyConfigManager(this);
 		
@@ -83,7 +80,7 @@ public class Main extends JavaPlugin {
             ItemStack item = new ItemStack(Material.WOOD_SWORD);
             ItemMeta meta = item.getItemMeta();
             ArrayList<String> lore = new ArrayList<>();
-            String line = Util.convertToInvisibleString("SSDATA#SSMAGIC|itemType TOOL|strength 9|defense 1|slots 12|MAGIC REGULAR Blizzard 4 1|MAGIC COMBO Berserk 2 1|MAGIC REGULAR Heal 4 1|SHORTCUT RIGHT_CLICK 0|SHORTCUT SHIFT_RIGHT_CLICK 2|#SSNPC|name Something|");
+            String line = Util.convertToInvisibleString("SSDATA#SSMAGIC|itemType TOOL|strength 300|defense 1|slots 12|MAGIC REGULAR Blizzard 4 1|MAGIC COMBO Berserk 2 1|MAGIC REGULAR Heal 4 1|SHORTCUT RIGHT_CLICK 0|SHORTCUT SHIFT_RIGHT_CLICK 2|#SSNPC|name Something|");
             lore.add(line);
             meta.setLore(lore);
             item.setItemMeta(meta);
@@ -108,10 +105,6 @@ public class Main extends JavaPlugin {
 
     public static Main getInstance() {
         return instance;
-    }
-
-    public EventProcesser getEventProcessor() {
-        return eventProcessor;
     }
 
 	public static MyConfigManager getMyConfigManager() {
