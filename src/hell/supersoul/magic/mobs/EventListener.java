@@ -22,7 +22,6 @@ public class EventListener implements Listener {
 	@EventHandler
 	public void onMythicMobSpawn(MythicMobSpawnEvent event) {
 		MythicMob mythicMob = event.getMobType();
-		Bukkit.getLogger().info(mythicMob.getInternalName());
         try {
             Class<?> clazz = Class.forName("hell.supersoul.magic.mobs.entities." + mythicMob.getInternalName());
             Constructor<?> constructor = clazz.getConstructor(MythicMob.class, Entity.class);
@@ -33,7 +32,6 @@ public class EventListener implements Listener {
             	Bukkit.getPluginManager().registerEvents((Listener) mobM, Main.getInstance());
         } catch (NoSuchMethodException | ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException
                 | InvocationTargetException e) {
-        	Bukkit.getLogger().info("ERRORED");
             return;
         }
 	}

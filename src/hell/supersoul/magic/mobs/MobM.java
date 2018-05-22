@@ -1,6 +1,7 @@
 package hell.supersoul.magic.mobs;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import org.bukkit.Bukkit;
@@ -121,6 +122,12 @@ public abstract class MobM {
 
 	public ArrayList<Integer> getTasksToEndOnDeath() {
 		return tasksToEndOnDeath;
+	}
+	
+	public void displayBossWarning(String message) {
+		ArrayList<String> title = new ArrayList<>();
+		ArrayList<Integer> length = new ArrayList<>();
+		title.add(ChatColor.RED + "- WARNING -");
 	}
 	
 }

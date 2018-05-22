@@ -9,6 +9,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -28,6 +30,7 @@ import hell.supersoul.magic.mobs.MobM;
 import hell.supersoul.magic.util.Util;
 import io.lumine.xikage.mythicmobs.MythicMobs;
 import io.lumine.xikage.mythicmobs.api.exceptions.InvalidMobTypeException;
+import io.lumine.xikage.mythicmobs.mobs.ActiveMob;
 import io.lumine.xikage.mythicmobs.mobs.MythicMob;
 import net.minecraft.server.v1_12_R1.EnumParticle;
 import net.minecraft.server.v1_12_R1.Packet;
@@ -87,14 +90,14 @@ public class IceWitch extends MobM implements Listener {
 		});
 
 		this.getAttackChance().get(0).add(1);
-		this.getPhasedAttacks().get(0).add(new AttackM(this, 200) {
+		this.getPhasedAttacks().get(0).add(new AttackM(this, 240) {
 			@Override
 			public void attack() {
 				IceWitch.this.getEntity().teleport(z4s6);
 				IceWitch.this.say("Taste my darkness power!!");
+				Entity ent = IceWitch.this.getEntity();
 				new BukkitRunnable() {
 					int id = 0;
-					Entity ent = IceWitch.this.getEntity();
 
 					@Override
 					public void run() {
@@ -115,8 +118,8 @@ public class IceWitch extends MobM implements Listener {
 							public void run() {
 								Location l = loc.clone();
 								l.add(0, 1.5, 0);
-								for (int i = 0; i < 20; i++) {
-									float r = (float) Util.randomInteger(-100, 100) / 1000;
+								for (int i = 0; i < 10; i++) {
+									float r = (float) Util.randomInteger(-100, 100) / 1000f;
 									if (i == 0)
 										r = 0;
 									Packet packet = new PacketPlayOutWorldParticles(EnumParticle.REDSTONE, true,
@@ -136,24 +139,24 @@ public class IceWitch extends MobM implements Listener {
 									((Player) ent).damage(3d);
 								}
 								id++;
-								loc.add(loc.getDirection().multiply(0.3));
-								if (id > 70 || ent.isDead()) {
+								loc.add(loc.getDirection().multiply(0.6));
+								if (id > 40 || ent.isDead()) {
 									this.cancel();
 								}
 							}
 						}.runTaskTimer(Main.getInstance(), 0, 2);
 						id++;
-						if (id > 40) {
+						if (id > 70) {
 							new BukkitRunnable() {
 								@Override
 								public void run() {
 									ent.teleport(z4s1);
 								}
-							}.runTaskLater(Main.getInstance(), 100);
+							}.runTaskLater(Main.getInstance(), 10);
 							this.cancel();
 						}
 					}
-				}.runTaskTimer(Main.getInstance(), 0, 5);
+				}.runTaskTimer(Main.getInstance(), 0, 3);
 			}
 		});
 
@@ -163,131 +166,143 @@ public class IceWitch extends MobM implements Listener {
 			public void attack() {
 				IceWitch.this.say("Don't you run away!");
 				new BukkitRunnable() {
-					int id = 20;
+					int i = 3;
 
-					@Override
 					public void run() {
-						Location target = Util.randomLocationInRegion(z4b1, z4b2);
-						ArrayList<Player> damaged = new ArrayList<>();
-						for (int x = 0; x <= 1; x++) {
-							for (int z = 0; z <= 1; z++) {
-								Location loc = target.clone().add(x, 0, z);
-								Material old = loc.getBlock().getType();
-								for (Player player : Bukkit.getOnlinePlayers()) {
-									player.sendBlockChange(loc, Material.BEACON, (byte) 0);
-								}
-								new BukkitRunnable() {
-									@Override
-									public void run() {
-										for (int y = 1; y <= 4; y++) {
-											Location l = loc.clone().add(0, y, 0);
-											Material o = l.getBlock().getType();
-											for (Player player : Bukkit.getOnlinePlayers()) {
-												player.sendBlockChange(l, Material.REDSTONE_BLOCK, (byte) 0);
-												if (y == 4)
-													player.getWorld().playEffect(l, Effect.STEP_SOUND,
-															Material.REDSTONE_BLOCK);
-												if (player.getWorld().getNearbyEntities(l, 0.5, 0.5, 0.5)
-														.contains(player) && !damaged.contains(player)) {
-													damaged.add(player);
-													player.damage(9);
-												}
-											}
-											new BukkitRunnable() {
-												@Override
-												public void run() {
-													for (Player player : Bukkit.getOnlinePlayers()) {
-														player.sendBlockChange(l, o, (byte) 0);
-														player.sendBlockChange(loc, old, (byte) 0);
+						for (int id = 0; id < 30; id++) {
+							Location target = Util.randomLocationInRegion(z4b1, z4b2);
+							ArrayList<Player> damaged = new ArrayList<>();
+							for (int x = 0; x <= 1; x++) {
+								for (int z = 0; z <= 1; z++) {
+									Location loc = target.clone().add(x, 0, z);
+									Material old = loc.getBlock().getType();
+									for (Player player : Bukkit.getOnlinePlayers()) {
+										player.sendBlockChange(loc, Material.BEACON, (byte) 0);
+									}
+									int z1 = z;
+									int x1 = x;
+									new BukkitRunnable() {
+										@Override
+										public void run() {
+											for (int y = 1; y <= 4; y++) {
+												Location l = loc.clone().add(0, y, 0);
+												Material o = l.getBlock().getType();
+												new BukkitRunnable() {
+													public void run() {
+														for (Player player : Bukkit.getOnlinePlayers()) {
+															player.sendBlockChange(l, Material.REDSTONE_BLOCK,
+																	(byte) 0);
+														}
+													}
+												}.runTaskLater(Main.getInstance(), y);
+												new BukkitRunnable() {
+													public void run() {
+														for (Player player : Bukkit.getOnlinePlayers()) {
+															player.sendBlockChange(l, o, (byte) 0);
+														}
+													}
+												}.runTaskLater(Main.getInstance(), 12 - y);
+												for (Player player : Bukkit.getOnlinePlayers()) {
+													if (y == 1 && (z1 == 0 && x1 == 0))
+														player.getWorld().playEffect(l, Effect.STEP_SOUND,
+																Material.REDSTONE_BLOCK);
+													if (player.getWorld().getNearbyEntities(l, 0.5, 0.5, 0.5)
+															.contains(player) && !damaged.contains(player)) {
+														damaged.add(player);
+														player.damage(9);
 													}
 												}
-											}.runTaskLater(Main.getInstance(), 20);
+												new BukkitRunnable() {
+													@Override
+													public void run() {
+														for (Player player : Bukkit.getOnlinePlayers()) {
+															player.sendBlockChange(loc, old, (byte) 0);
+														}
+													}
+												}.runTaskLater(Main.getInstance(), 10);
+											}
 										}
-									}
-								}.runTaskLater(Main.getInstance(), 30);
+									}.runTaskLater(Main.getInstance(), 10);
+								}
 							}
 						}
-						id--;
-						if (id < 0 || entity.isDead())
+						i--;
+						if (i < 0)
 							this.cancel();
 					}
-				}.runTaskTimer(Main.getInstance(), 0, 5);
+				}.runTaskTimer(Main.getInstance(), 0, 40);
 			}
 		});
 
 		this.getAttackChance().get(0).add(1);
-		this.getPhasedAttacks().get(0).add(new AttackM(this, 100) {
+		this.getPhasedAttacks().get(0).add(new AttackM(this, 60) {
+
 			@Override
 			public void attack() {
 				IceWitch.this.say("Did you really think you can win? Take THIS!");
+				ArrayList<Player> damaged = new ArrayList<>();
 				new BukkitRunnable() {
 					@Override
 					public void run() {
-						IceWitch.this
-								.say("Run up to the sides or to the back!! Elsa's dropping an Ice Bomb! Be careful!!!");
+						for (int x = 0; x <= 2; x++) {
+							for (int y = 0; y <= 2; y++) {
+								for (int z = 0; z <= 2; z++) {
+									Location spawn = z4s5.clone().add(x, y, z);
+									Entity ent = z4s5.getWorld().spawnFallingBlock(spawn, Material.TNT, (byte) 0);
+									new BukkitRunnable() {
+										int id = 6;
+
+										@Override
+										public void run() {
+											ent.getWorld().spigot().playEffect(spawn, Effect.CLOUD);
+											ent.getWorld().playEffect(spawn, Effect.STEP_SOUND, Material.PACKED_ICE);
+											id--;
+											if (id < 0) {
+												this.cancel();
+											}
+										}
+									}.runTaskTimer(Main.getInstance(), 0, 4);
+								}
+							}
+						}
 						new BukkitRunnable() {
+
 							@Override
 							public void run() {
-
-								for (int x = 0; x <= 2; x++) {
-									for (int y = 0; y <= 2; y++) {
-										for (int z = 0; z <= 2; z++) {
-											Location spawn = z4s5.clone().add(x, y, z);
-											z4s5.getWorld().spawnFallingBlock(spawn, Material.TNT, (byte) 0);
-											ArrayList<Player> damaged = new ArrayList<>();
-											new BukkitRunnable() {
-												int id = 7;
-
-												@Override
-												public void run() {
-													z4s5.getWorld().spigot().playEffect(spawn, Effect.CLOUD);
-													z4s5.getWorld().playEffect(spawn, Effect.STEP_SOUND,
-															Material.PACKED_ICE);
-													id--;
-													if (id < 0) {
-														Location corner1 = z4b1.clone().add(0, 1, 0);
-														Location corner2 = z4b2.clone().add(0, 1, 0);
-														int minX = Math.min(corner1.getBlockX(), corner2.getBlockX());
-														int maxX = Math.max(corner1.getBlockX(), corner2.getBlockX());
-														int minZ = Math.min(corner1.getBlockZ(), corner2.getBlockZ());
-														int maxZ = Math.max(corner1.getBlockZ(), corner2.getBlockZ());
-														int LY = corner1.getBlockY();
-														int counter = 0;
-														for (int x2 = minX; x2 <= maxX; x2++) {
-															for (int z2 = minZ; z2 <= maxZ; z2++) {
-																Location loc = new Location(z4b1.getWorld(), x2, LY,
-																		z2);
-																counter++;
-																if (counter == 7) {
-																	z4s5.getWorld().spigot().playEffect(loc,
-																			Effect.CLOUD);
-																	z4s5.getWorld().playEffect(loc, Effect.STEP_SOUND,
-																			Material.PACKED_ICE);
-																	counter = 0;
-																}
-																for (Entity ent : z4s5.getWorld().getNearbyEntities(loc,
-																		0.5, 0.5, 0.5)) {
-																	if (!(ent instanceof Player))
-																		continue;
-																	Player player = (Player) ent;
-																	if (player.getLocation().getBlockY() > LY)
-																		continue;
-																	if (damaged.contains(player))
-																		continue;
-																	damaged.add(player);
-																	player.damage(16d);
-																}
-															}
-														}
-														this.cancel();
-													}
-												}
-											}.runTaskTimer(Main.getInstance(), 0, 4);
+								Location corner1 = z4b1.clone().add(0, 1, 0);
+								Location corner2 = z4b2.clone().add(0, 1, 0);
+								int minX = Math.min(corner1.getBlockX(), corner2.getBlockX());
+								int maxX = Math.max(corner1.getBlockX(), corner2.getBlockX());
+								int minZ = Math.min(corner1.getBlockZ(), corner2.getBlockZ());
+								int maxZ = Math.max(corner1.getBlockZ(), corner2.getBlockZ());
+								int LY = corner1.getBlockY();
+								int counter = 0;
+								for (int x2 = minX; x2 <= maxX; x2++) {
+									for (int z2 = minZ; z2 <= maxZ; z2++) {
+										Location loc = new Location(z4b1.getWorld(), x2, LY, z2);
+										counter++;
+										if (counter == 2) {
+											z4s5.getWorld().spawnParticle(Particle.CLOUD, loc, 3);
+											z4s5.getWorld().playEffect(loc, Effect.STEP_SOUND, Material.PACKED_ICE);
+											counter = 0;
+										}
+										for (Entity ent : z4s5.getWorld().getNearbyEntities(loc, 0.5, 0.5, 0.5)) {
+											if (!(ent instanceof Player))
+												continue;
+											Player player = (Player) ent;
+											if (player.getLocation().getBlockY() > LY)
+												continue;
+											if (damaged.contains(player))
+												continue;
+											damaged.add(player);
+											player.damage(16d);
 										}
 									}
 								}
+								this.cancel();
 							}
-						}.runTaskLater(Main.getInstance(), 40);
+						}.runTaskLater(Main.getInstance(), 24);
+
 					}
 				}.runTaskLater(Main.getInstance(), 40);
 			}
@@ -297,6 +312,7 @@ public class IceWitch extends MobM implements Listener {
 		this.getAttackChance().put(1, new ArrayList<>());
 		this.getAttackChance().get(1).add(1);
 		this.getPhasedAttacks().get(1).add(new AttackM(this, 100) {
+
 			@Override
 			public void attack() {
 				try {
@@ -313,7 +329,7 @@ public class IceWitch extends MobM implements Listener {
 		});
 
 		this.getAttackChance().get(1).add(1);
-		this.getPhasedAttacks().get(1).add(new AttackM(this, 200) {
+		this.getPhasedAttacks().get(1).add(new AttackM(this, 240) {
 			@Override
 			public void attack() {
 				IceWitch.this.say("This will be your FINAL MOMENT!!!");
@@ -363,19 +379,19 @@ public class IceWitch extends MobM implements Listener {
 								}
 								id++;
 								loc.add(loc.getDirection().multiply(0.4));
-								if (id > 100 || entity.isDead()) {
+								if (id > 50 || entity.isDead()) {
 									this.cancel();
 								}
 							}
 						}.runTaskTimer(Main.getInstance(), 0, 1);
 						id++;
-						if (id > 40) {
+						if (id > 30) {
 							new BukkitRunnable() {
 								@Override
 								public void run() {
 									ent.teleport(z4s1);
 								}
-							}.runTaskLater(Main.getInstance(), 100);
+							}.runTaskLater(Main.getInstance(), 10);
 							this.cancel();
 						}
 					}
@@ -384,7 +400,7 @@ public class IceWitch extends MobM implements Listener {
 		});
 
 		this.getAttackChance().get(1).add(1);
-		this.getPhasedAttacks().get(1).add(new AttackM(this, 100) {
+		this.getPhasedAttacks().get(1).add(new AttackM(this, 200) {
 			@Override
 			public void attack() {
 				IceWitch.this.say("ArghhhHGHGHHGHHGGHH!!!!");
@@ -405,7 +421,7 @@ public class IceWitch extends MobM implements Listener {
 						Location loc = ent.getLocation().clone();
 						ArrayList<Player> damaged = new ArrayList<>();
 						loc.setDirection(p.getLocation().toVector().subtract(ent.getLocation().toVector()));
-						for (int j = 0; j <= 40; j++) {
+						for (int j = 0; j <= 60; j++) {
 							Location l = loc.clone();
 							area.add(l);
 							l.add(0, 1.5, 0);
@@ -420,15 +436,15 @@ public class IceWitch extends MobM implements Listener {
 									((CraftPlayer) online).getHandle().playerConnection.sendPacket(packet);
 								}
 							}
-							loc.add(loc.getDirection().multiply(0.7));
+							loc.add(loc.getDirection().multiply(0.3));
 						}
 						new BukkitRunnable() {
-							int id = 8;
+							int id = 4;
 
 							@Override
 							public void run() {
 								for (Location loc : area) {
-									for (int i = 0; i < 40; i++) {
+									for (int i = 0; i < 10; i++) {
 										float r = (float) Util.randomInteger(-100, 100) / 1000;
 										if (i == 0)
 											r = 0;
@@ -464,7 +480,7 @@ public class IceWitch extends MobM implements Listener {
 		});
 
 		this.getAttackChance().get(1).add(1);
-		this.getPhasedAttacks().get(1).add(new AttackM(this, 100) {
+		this.getPhasedAttacks().get(1).add(new AttackM(this, 40) {
 			@Override
 			public void attack() {
 				IceWitch.this.say("GET OOOUUUUUTTT!!!");
@@ -489,6 +505,10 @@ public class IceWitch extends MobM implements Listener {
 
 	@Override
 	public void onSpawn() {
+		for (ActiveMob mob : MythicMobs.inst().getMobManager().getActiveMobs()) {
+			if (mob.getType().equals(this.getMythicMob()))
+				mob.getEntity().remove();
+		}
 		this.startAttacking();
 	}
 
@@ -546,26 +566,28 @@ public class IceWitch extends MobM implements Listener {
 		if (event.getEntityType().equals(EntityType.FALLING_BLOCK)
 				&& event.getBlock().getWorld().equals(this.getEntity().getWorld())) {
 			FallingBlock fb = (FallingBlock) event.getEntity();
-			fb.setDropItem(false);
-			if (fb.getBlockId() == 174) {
-				Location loc = event.getBlock().getLocation();
-				event.getBlock().getWorld().createExplosion(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(), 3, false,
-						false);
+			if (fb.getMaterial().equals(Material.PACKED_ICE) || fb.getMaterial().equals(Material.TNT)) {
+				fb.setDropItem(false);
+				if (fb.getMaterial().equals(Material.PACKED_ICE)) {
+					Location loc = event.getBlock().getLocation();
+					event.getBlock().getWorld().createExplosion(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(), 3,
+							false, false);
+				}
 			}
 			event.setCancelled(true);
 		}
 	}
-	
+
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onEntityDamage(EntityDamageEvent event) {
-		
+
 		if (!event.getEntity().equals(this.getEntity()))
 			return;
 		if (event.isCancelled())
 			return;
 		if (!(event.getEntity() instanceof LivingEntity))
 			return;
-		
+
 		LivingEntity ent = (LivingEntity) event.getEntity();
 		double previousHealth = ent.getHealth();
 		double newHealth = ent.getHealth() - event.getFinalDamage();
