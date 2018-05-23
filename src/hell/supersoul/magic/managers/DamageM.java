@@ -2,7 +2,9 @@ package hell.supersoul.magic.managers;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -13,6 +15,7 @@ import hell.supersoul.magic.Main;
 import hell.supersoul.magic.managers.ComboManager.HitLevel;
 import hell.supersoul.magic.rpg.PlayerM;
 import hell.supersoul.magic.util.Util;
+import io.lumine.xikage.mythicmobs.MythicMobs;
 import net.md_5.bungee.api.ChatColor;
 
 public class DamageM {
@@ -92,7 +95,13 @@ public class DamageM {
 				// TODO other things to consider:
 				// Locked Magic, Potion Effect, Status Ailments
 
-			} else {
+			} else if (victim instanceof LivingEntity) {
+				LivingEntity entity = (LivingEntity) victim;
+				if (!MobManager.getAliveMobs().containsKey(victim)) {
+					double defenseModifier = 100d / (entity.getAttribute(Attribute.GENERIC_ARMOR).getValue() + entity.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).getValue() + 100d);
+					reductionModifier *= defenseModifier;
+					debug += " The Defense Modifier is: " + defenseModifier;
+				}
 				// TODO check MM
 			}
 

@@ -24,6 +24,8 @@ import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import com.connorlinfoot.titleapi.TitleAPI;
+
 import hell.supersoul.magic.Main;
 import hell.supersoul.magic.mobs.AttackM;
 import hell.supersoul.magic.mobs.MobM;
@@ -32,6 +34,7 @@ import io.lumine.xikage.mythicmobs.MythicMobs;
 import io.lumine.xikage.mythicmobs.api.exceptions.InvalidMobTypeException;
 import io.lumine.xikage.mythicmobs.mobs.ActiveMob;
 import io.lumine.xikage.mythicmobs.mobs.MythicMob;
+import net.md_5.bungee.api.ChatColor;
 import net.minecraft.server.v1_12_R1.EnumParticle;
 import net.minecraft.server.v1_12_R1.Packet;
 import net.minecraft.server.v1_12_R1.PacketPlayOutWorldParticles;
@@ -201,7 +204,7 @@ public class IceWitch extends MobM implements Listener {
 															player.sendBlockChange(l, o, (byte) 0);
 														}
 													}
-												}.runTaskLater(Main.getInstance(), 12 - y);
+												}.runTaskLater(Main.getInstance(), 9 - y);
 												for (Player player : Bukkit.getOnlinePlayers()) {
 													if (y == 1 && (z1 == 0 && x1 == 0))
 														player.getWorld().playEffect(l, Effect.STEP_SOUND,
@@ -219,7 +222,7 @@ public class IceWitch extends MobM implements Listener {
 															player.sendBlockChange(loc, old, (byte) 0);
 														}
 													}
-												}.runTaskLater(Main.getInstance(), 10);
+												}.runTaskLater(Main.getInstance(), 8);
 											}
 										}
 									}.runTaskLater(Main.getInstance(), 10);
@@ -509,7 +512,17 @@ public class IceWitch extends MobM implements Listener {
 			if (mob.getType().equals(this.getMythicMob()))
 				mob.getEntity().remove();
 		}
-		this.startAttacking();
+		for (Entity entity : IceWitch.this.getEntity().getNearbyEntities(30, 60, 30)) {
+			if (entity instanceof Player) {
+				IceWitch.this.displayBossWarning(ChatColor.BOLD + "" + ChatColor.DARK_PURPLE + "ELSA", (Player) entity);
+			}
+		}
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				IceWitch.this.startAttacking();
+			}
+		}.runTaskLater(Main.getInstance(), 20);
 	}
 
 	@Override

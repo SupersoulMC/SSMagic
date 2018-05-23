@@ -7,6 +7,7 @@ import hell.supersoul.magic.rpg.PlayerM.StatSource;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -68,13 +69,22 @@ public class EventListener implements Listener {
 			ComboManager.executeHit(player, event.getEntity());
 			event.setDamage(1);
 		}
-
-		// RPG Part is put here to ensure the hit is executed.
-		DamageM damageM = new DamageM(event.getDamage());
-		damageM.setAttacker(event.getDamager());
-		damageM.setVictim(event.getEntity());
-		damageM.setDamageType(DamageType.PHYSICAL);
-		event.setDamage(damageM.getFinalDamage(true));
+		if (ent instanceof Arrow) {
+			Arrow arrow = (Arrow) ent;
+			if (!(arrow.getShooter() instanceof Entity))
+				return;
+			DamageM damageM = new DamageM(event.getDamage() / 4.5);
+			damageM.setAttacker((Entity) arrow.getShooter());
+			damageM.setVictim(event.getEntity());
+			damageM.setDamageType(DamageType.PHYSICAL);
+			event.setDamage(damageM.getFinalDamage(true));
+		} else {
+			DamageM damageM = new DamageM(event.getDamage());
+			damageM.setAttacker(event.getDamager());
+			damageM.setVictim(event.getEntity());
+			damageM.setDamageType(DamageType.PHYSICAL);
+			event.setDamage(damageM.getFinalDamage(true));
+		}
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
